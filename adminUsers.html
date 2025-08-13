@@ -254,7 +254,7 @@
             <!-- Página de Login -->
             <div id="login-page">
                 <div class="login-form">
-                    <h3 class="text-center mb-4" id="loginHeader">Inicio de Sesión</h3>
+                    <h3 class="text-center mb-4" id="loginHeader">Dashboard de Sesión</h3>
                     
                     <div class="mb-3">
                         <label for="inputEmail" class="form-label">Email</label>
@@ -492,7 +492,7 @@
             const foundUser = users.find(u => u.email === email && u.password === password);
             
             if (foundUser) {
-                loginHeader.innerHTML = '<h3 class="text-center mb-4" style="color: green;">¡Inicio de sesión exitoso!</h3>';
+                loginHeader.innerHTML = '<h3 class="text-center mb-4" style="color: green;">¡Dashboard de sesión exitoso!</h3>';
                 localStorage.setItem('currentUser', JSON.stringify(foundUser));
                 
                 // Redirigir a la página de administración
@@ -594,7 +594,7 @@
             // Resetear el formulario de login
             document.getElementById('inputEmail').value = '';
             document.getElementById('inputPassword').value = '';
-            document.getElementById('loginHeader').innerHTML = '<h3 class="text-center mb-4">Inicio de Sesión</h3>';
+            document.getElementById('loginHeader').innerHTML = '<h3 class="text-center mb-4">Dashboard de Sesión</h3>';
         }
         
         // Función para actualizar la vista de usuarios

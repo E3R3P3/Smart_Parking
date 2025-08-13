@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="adminPanelControl.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
+</head>
+
+<body class="s1 sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="./home.html">SP</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button> -->
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="./index.html">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="./adminHome.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="./adminAlertas.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>
+                            Alertas
+                        </a>
+                        <a class="nav-link" href="./adminPanelControl.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-cog" aria-hidden="true"></i></div>
+                            Panel de Control
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Texto de ejemplo
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+
+            <div class="admin-header">
+                <div class="logo">
+                    <!-- <div class="logo-icon">
+                        <i class="fas fa-parking"></i>
+                    </div> -->
+                    <div class="logo-text">Panel de Control Administrativo</div>
+                </div>
+
+            </div>
+
+            <!-- Main Content -->
+            <div class="admin-content">
+                <!-- Panel de Configuración -->
+                <div class="settings-panel">
+                    <h2 class="panel-title">Configuración de Parqueos</h2>
+
+                    <div class="form-group">
+                        <label for="mall-select">Centro Comercial</label>
+                        <select id="mall-select">
+                            <option value="agora">Ágora Mall</option>
+                            <option value="sambil">Sambil Santo Domingo</option>
+                            <option value="blue">Blue Mall</option>
+                            <option value="galeria">Galería 360</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hourly-rate">Tarifa por hora (RD$)</label>
+                        <input type="number" id="hourly-rate" min="0" step="0.01" value="75.00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reservation-time">Tiempo de reserva (minutos)</label>
+                        <input type="number" id="reservation-time" min="1" value="15">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max-reservation">Tiempo máximo de reserva (horas)</label>
+                        <input type="number" id="max-reservation" min="1" value="3">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grace-period">Periodo de gracia (minutos)</label>
+                        <input type="number" id="grace-period" min="0" value="10">
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Configuración
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Restablecer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel de Gestión de Parqueos -->
+                <div class="parking-panel">
+                    <div class="parking-header">
+                        <div class="selected-mall">
+                            <i class="fas fa-building"></i>
+                            <span>Ágora Mall - Nivel 1</span>
+                            <div class="mall-status status-active">
+                                <i class="fas fa-circle"></i> Activo
+                            </div>
+                        </div>
+                        <div class="parking-actions">
+                            <!-- <button class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i> Actualizar
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div class="parking-grid" id="parkingGrid">
+                        <!-- Los espacios de parqueo se generarán con JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Datos de ejemplo para los espacios de parqueo
+                const parkingSpaces = [
+                    { id: "A1", status: "available" },
+                    { id: "A2", status: "occupied" },
+                    { id: "A3", status: "reserved" },
+                    { id: "A4", status: "disabled" },
+                    { id: "B1", status: "available" },
+                    { id: "B2", status: "available" },
+                    { id: "B3", status: "occupied" },
+                    { id: "B4", status: "reserved" },
+                    { id: "C1", status: "available" },
+                    { id: "C2", status: "disabled" },
+                    { id: "C3", status: "available" },
+                    { id: "C4", status: "occupied" },
+                    { id: "D1", status: "reserved" },
+                    { id: "D2", status: "available" },
+                    { id: "D3", status: "occupied" },
+                    { id: "D4", status: "available" },
+                    { id: "E1", status: "reserved" },
+                    { id: "E2", status: "disabled" },
+                    { id: "E3", status: "available" },
+                    { id: "E4", status: "occupied" },
+                    { id: "F1", status: "available" },
+                    { id: "F2", status: "reserved" },
+                    { id: "F3", status: "available" },
+                    { id: "F4", status: "disabled" }
+                ];
+
+                // Generar la cuadrícula de parqueos
+                function generateParkingGrid() {
+                    const parkingGrid = document.getElementById('parkingGrid');
+                    parkingGrid.innerHTML = '';
+
+                    parkingSpaces.forEach(space => {
+                        const spaceElement = document.createElement('div');
+                        spaceElement.className = `parking-space space-${space.status}`;
+                        spaceElement.innerHTML = `
+                    <div class="space-id">${space.id}</div>
+                    <div class="space-status space-status-${space.status}">
+                        ${getStatusText(space.status)}
+                    </div>
+                    <div class="space-actions">
+                        <button class="space-action" onclick="setSpaceStatus('${space.id}', 'available')">
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                        <button class="space-action" onclick="setSpaceStatus('${space.id}', 'reserved')">
+                            <i class="fas fa-calendar-check"></i>
+                        </button>
+                        <button class="space-action" onclick="setSpaceStatus('${space.id}', 'disabled')">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    </div>
+                `;
+
+                        parkingGrid.appendChild(spaceElement);
+                    });
+                }
+
+                // Obtener texto para el estado
+                function getStatusText(status) {
+                    const statusText = {
+                        available: "Disponible",
+                        occupied: "Ocupado",
+                        reserved: "Reservado",
+                        disabled: "Deshabilitado"
+                    };
+                    return statusText[status];
+                }
+
+                // Cambiar estado de un espacio
+                function setSpaceStatus(spaceId, newStatus) {
+                    const space = parkingSpaces.find(s => s.id === spaceId);
+                    if (space) {
+                        space.status = newStatus;
+                        generateParkingGrid();
+
+                        // Mostrar mensaje de confirmación
+                        alert(`El espacio ${spaceId} ha sido actualizado a: ${getStatusText(newStatus)}`);
+                    }
+                }
+
+                // Cambiar centro comercial
+                document.getElementById('mall-select').addEventListener('change', function () {
+                    const mallName = this.options[this.selectedIndex].text;
+                    document.querySelector('.selected-mall span').textContent = `${mallName} - Nivel 1`;
+
+                    // Simular carga de nuevos datos
+                    parkingSpaces.forEach(space => {
+                        // Cambiar estados aleatoriamente para simular cambio de establecimiento
+                        const statuses = ['available', 'occupied', 'reserved', 'disabled'];
+                        const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                        space.status = randomStatus;
+                    });
+
+                    generateParkingGrid();
+                });
+
+                // Guardar configuración
+                document.querySelector('.settings-panel .btn-primary').addEventListener('click', function () {
+                    const hourlyRate = document.getElementById('hourly-rate').value;
+                    const reservationTime = document.getElementById('reservation-time').value;
+                    const maxReservation = document.getElementById('max-reservation').value;
+                    const gracePeriod = document.getElementById('grace-period').value;
+
+                    alert(`Configuración guardada exitosamente:\n\n` +
+                        `Tarifa por hora: RD$ ${hourlyRate}\n` +
+                        `Tiempo de reserva: ${reservationTime} minutos\n` +
+                        `Tiempo máximo de reserva: ${maxReservation} horas\n` +
+                        `Periodo de gracia: ${gracePeriod} minutos`);
+                });
+
+                // Restablecer valores
+                document.querySelector('.settings-panel .btn-secondary').addEventListener('click', function () {
+                    document.getElementById('hourly-rate').value = "75.00";
+                    document.getElementById('reservation-time').value = "15";
+                    document.getElementById('max-reservation').value = "3";
+                    document.getElementById('grace-period').value = "10";
+                });
+
+                // Inicializar la cuadrícula
+                generateParkingGrid();
+            </script>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <!-- <script src="./scripts.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="src/datatables-simple-demo.js"></script> -->
+</body>
+
+</html>
