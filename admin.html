@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGP - Panel de Administración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        .control-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-panel h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .data-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+
+        .json-container {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .reservation-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .reservation-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reservation-item:last-child {
+            border-bottom: none;
+        }
+
+        .reservation-info {
+            flex: 1;
+        }
+
+        .reservation-id {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .reservation-details {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .reservation-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-expired {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="header">
+            <h1>Panel de Administración SIGP</h1>
+            <p>Gestiona y resetea los datos del sistema</p>
+        </div>
+
+        <div class="control-panel">
+            <h2>Acciones de Administración</h2>
+            <div class="buttons-container">
+                <button class="btn btn-danger" id="reset-btn">
+                    <i class="fas fa-trash-alt"></i> Resetear Todo el Almacenamiento
+                </button>
+                <button class="btn btn-success" id="restore-btn">
+                    <i class="fas fa-redo-alt"></i> Restaurar Datos Iniciales
+                </button>
+                <button class="btn btn-info" id="refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Actualizar Vista
+                </button>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h2>Datos Actuales</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Reservas Totales</h3>
+                    <div class="stat-value" id="total-reservations">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Centros Comerciales</h3>
+                    <div class="stat-value" id="total-malls">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Espacios Totales</h3>
+                    <div class="stat-value" id="total-spaces">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Última Actualización</h3>
+                    <div class="stat-value" id="last-update">Nunca</div>
+                </div>
+            </div>
+
+            <h3>Reservas Activas</h3>
+            <div class="reservation-list" id="reservation-list">
+                <!-- Lista de reservas se cargará aquí -->
+            </div>
+
+            <h3>Datos en JSON</h3>
+            <div class="json-container" id="json-data">
+                {/* Los datos JSON se mostrarán aquí */}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para obtener datos iniciales
+        function getInitialData() {
+            return {
+                malls: [
+                    {
+                        id: "agora",
+                        name: "Ágora Mall",
+                        address: "Av. Abraham Lincoln, Santo Domingo",
+                        levels: [
+                            {
+                                name: "Nivel 1",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Estándar", distance: 150 },
+                                    { id: "A2", status: "available", size: "Estándar", distance: 145 },
+                                    { id: "A3", status: "occupied", size: "Estándar", distance: 140 },
+                                    { id: "A4", status: "available", size: "Grande", distance: 135 },
+                                    { id: "B1", status: "reserved", size: "Estándar", distance: 130 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 125 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 120 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 115 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 110 },
+                                    { id: "C2", status: "reserved", size: "Grande", distance: 105 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 100 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 95 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 90 },
+                                    { id: "D2", status: "available", size: "Estándar", distance: 85 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 80 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 75 }
+                                ]
+                            },
+                            // ... otros niveles ...
+                        ],
+                        stats: {
+                            totalSpaces: 90,
+                            availableSpaces: 30,
+                            avgSearchTime: 6.5,
+                            occupancyRate: 33,
+                            activeReservations: 12
+                        }
+                    },
+                    {
+                        id: "sambil",
+                        name: "Sambil Santo Domingo",
+                        address: "Av. John F. Kennedy, Santo Domingo",
+                        levels: [
+                            {
+                                name: "Nivel 1",
+                                spaces: [
+                                    { id: "B1", status: "occupied", size: "Estándar", distance: 160 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 155 },
+                                    { id: "B3", status: "available", size: "Grande", distance: 150 },
+                                    { id: "B4", status: "occupied", size: "Estándar", distance: 145 }
+                                ]
+                            }
+                        ],
+                        stats: {
+                            totalSpaces: 90,
+                            availableSpaces: 40,
+                            avgSearchTime: 5.2,
+                            occupancyRate: 55,
+                            activeReservations: 1
+                        }
+                    },
+                    {
+                        id: "blue",
+                        name: "Blue Mall",
+                        address: "Av. Winston Churchill, Santo Domingo",
+                        levels: [
+                            {
+                                name: "Nivel 1",
+                                spaces: [
+                                    { id: "C1", status: "available", size: "Estándar", distance: 120 },
+                                    { id: "C2", status: "occupied", size: "Estándar", distance: 115 },
+                                    { id: "C3", status: "available", size: "Grande", distance: 110 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 105 }
+                                ]
+                            }
+                        ],
+                        stats: {
+                            totalSpaces: 90,
+                            availableSpaces: 50,
+                            avgSearchTime: 4.8,
+                            occupancyRate: 45,
+                            activeReservations: 2
+                        }
+                    },
+                    {
+                        id: "galeria",
+                        name: "Galería 360",
+                        address: "Av. John F. Kennedy esq. Av. Ortega y Gasset, Santo Domingo",
+                        levels: [
+                            {
+                                name: "Nivel 1",
+                                spaces: [
+                                    { id: "D1", status: "available", size: "Estándar", distance: 140 },
+                                    { id: "D2", status: "occupied", size: "Estándar", distance: 135 },
+                                    { id: "D3", status: "available", size: "Estándar", distance: 130 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 125 }
+                                ]
+                            }
+                        ],
+                        stats: {
+                            totalSpaces: 90,
+                            availableSpaces: 60,
+                            avgSearchTime: 5.0,
+                            occupancyRate: 33,
+                            activeReservations: 0
+                        }
+                    }
+                    // ... otros centros comerciales ...
+                ],
+                reservations: []
+            };
+        }
+
+        // Función para cargar datos actuales
+        function loadCurrentData() {
+            const data = localStorage.getItem('parkingSystemData');
+            return data ? JSON.parse(data) : null;
+        }
+
+        // Función para actualizar la vista
+        function updateView() {
+            const currentData = loadCurrentData();
+            const jsonDataElement = document.getElementById('json-data');
+            const reservationList = document.getElementById('reservation-list');
+
+            if (!currentData) {
+                jsonDataElement.textContent = "No hay datos almacenados";
+                document.getElementById('total-reservations').textContent = "0";
+                document.getElementById('total-malls').textContent = "0";
+                document.getElementById('total-spaces').textContent = "0";
+                document.getElementById('last-update').textContent = "Nunca";
+                reservationList.innerHTML = '<div class="reservation-item">No hay reservas</div>';
+                return;
+            }
+
+            // Mostrar datos en formato JSON
+            jsonDataElement.textContent = JSON.stringify(currentData, null, 2);
+
+            // Actualizar estadísticas
+            document.getElementById('total-reservations').textContent =
+                currentData.reservations ? currentData.reservations.length : 0;
+
+            document.getElementById('total-malls').textContent =
+                currentData.malls ? currentData.malls.length : 0;
+
+            let totalSpaces = 0;
+            if (currentData.malls) {
+                currentData.malls.forEach(mall => {
+                    if (mall.levels) {
+                        mall.levels.forEach(level => {
+                            totalSpaces += level.spaces.length;
+                        });
+                    }
+                });
+            }
+            document.getElementById('total-spaces').textContent = totalSpaces;
+
+            document.getElementById('last-update').textContent =
+                new Date().toLocaleTimeString();
+
+            // Mostrar reservas
+            reservationList.innerHTML = '';
+            if (currentData.reservations && currentData.reservations.length > 0) {
+                currentData.reservations.forEach(reservation => {
+                    const reservationDate = new Date(reservation.date);
+                    const now = new Date();
+                    const isActive = reservation.status === 'active' &&
+                        (now - reservationDate) < (2 * 60 * 60 * 1000); // 2 horas de validez
+
+                    const item = document.createElement('div');
+                    item.className = 'reservation-item';
+                    item.innerHTML = `
+                        <div class="reservation-info">
+                            <div class="reservation-id">Reserva #${reservation.id.toString().slice(-6)}</div>
+                            <div class="reservation-details">
+                                ${reservation.mall} - ${reservation.level} - ${reservation.space}
+                            </div>
+                            <div class="reservation-details">
+                                ${reservationDate.toLocaleString()}
+                            </div>
+                        </div>
+                        <div class="reservation-status ${isActive ? 'status-active' : 'status-expired'}">
+                            ${isActive ? 'Activa' : 'Expirada'}
+                        </div>
+                    `;
+                    reservationList.appendChild(item);
+                });
+            } else {
+                reservationList.innerHTML = '<div class="reservation-item">No hay reservas registradas</div>';
+            }
+        }
+
+        // Eventos de botones
+        document.getElementById('reset-btn').addEventListener('click', function () {
+            if (confirm('¿Estás seguro de que quieres eliminar TODOS los datos? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('parkingSystemData');
+                updateView();
+                alert('Todos los datos han sido eliminados. El sistema se ha reiniciado.');
+            }
+        });
+
+        document.getElementById('restore-btn').addEventListener('click', function () {
+            if (confirm('¿Restaurar datos iniciales? Esto eliminará los datos actuales.')) {
+                const initialData = getInitialData();
+                localStorage.setItem('parkingSystemData', JSON.stringify(initialData));
+                updateView();
+                alert('Datos iniciales restaurados con éxito.');
+            }
+        });
+
+        document.getElementById('refresh-btn').addEventListener('click', function () {
+            updateView();
+            alert('Vista actualizada con los últimos datos.');
+        });
+
+        // Inicializar la vista
+        document.addEventListener('DOMContentLoaded', function () {
+            updateView();
+        });
+    </script>
+</body>
+
+</html>

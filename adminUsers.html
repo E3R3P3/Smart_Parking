@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: var(--dark);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .navbar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 0;
+        }
+        
+        .navbar .nav-link {
+            color: white !important;
+            padding: 15px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .navbar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 500px;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .login-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-panel {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .btn-custom {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+        
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-card:last-child {
+            border-bottom: none;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-role {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .role-admin {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .role-user {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .json-viewer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Sistema de Gestión de Usuarios</h1>
+            <p>Panel de administración para restablecer usuarios</p>
+        </div>
+        
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="nav-login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-admin">Administración</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-users">Usuarios</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <!-- Página de Login -->
+            <div id="login-page">
+                <div class="login-form">
+                    <h3 class="text-center mb-4" id="loginHeader">Inicio de Sesión</h3>
+                    
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="••••••">
+                    </div>
+                    
+                    <div class="d-grid mb-3">
+                        <button class="btn btn-custom" id="loginButton">
+                            <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">¿No tienes cuenta? <a href="#" id="showRegister">Regístrate</a></p>
+                    </div>
+                    
+                    <div id="registerForm" class="mt-4" style="display: none;">
+                        <h4 class="text-center mb-4">Crear Nueva Cuenta</h4>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputFirstName" placeholder="Nombre">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputLastName" placeholder="Apellido">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="inputAge" placeholder="Edad">
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-select" id="inputRole">
+                                    <option value="user">Usuario</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button class="btn btn-custom" id="createAccountBtn">
+                                <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Página de Administración -->
+            <div id="admin-page" style="display: none;">
+                <h2 class="mb-4">Panel de Administración</h2>
+                
+                <div class="admin-panel">
+                    <h3 class="mb-4">Restablecer Sistema</h3>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Estas acciones afectarán todos los datos del sistema. ¡Usar con precaución!
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Restablecer Usuarios</div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Restaura los usuarios a su estado inicial con los valores predeterminados.
+                                    </p>
+                                    <button class="btn btn-custom" id="resetUsersBtn">
+                                        <i class="fas fa-users-cog me-2"></i>Restablecer Usuarios
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Restablecer Todo</div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        Elimina todos los datos del sistema y restablece a valores iniciales.
+                                    </p>
+                                    <button class="btn btn-danger" id="resetAllBtn">
+                                        <i class="fas fa-trash-alt me-2"></i>Restablecer Todo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4 class="mb-3">Datos Actuales</h4>
+                        <div class="json-viewer" id="jsonData">
+                            {/* Los datos JSON se mostrarán aquí */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Página de Usuarios -->
+            <div id="users-page" style="display: none;">
+                <h2 class="mb-4">Gestión de Usuarios</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Usuarios Totales</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-value" id="adminUsers">0</div>
+                            <div class="stat-label">Administradores</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-value" id="regularUsers">0</div>
+                            <div class="stat-label">Usuarios Regulares</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgAge">0</div>
+                            <div class="stat-label">Edad Promedio</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">Lista de Usuarios</div>
+                    <div class="card-body p-0">
+                        <div id="usersList">
+                            {/* Los usuarios se mostrarán aquí */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Sistema de Gestión de Usuarios &copy; 2023</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Datos iniciales de usuarios
+        const initialUsers = [
+            {
+                name: "admin",
+                lastName: "User",
+                email: "admin@example.com",
+                password: "123456",
+                age: 30,
+                role: "admin"
+            },
+            {
+                name: "juan",
+                lastName: "Perez",
+                email: "juan@example.com",
+                password: "abc123",
+                age: 25,
+                role: "user"
+            }
+        ];
+        
+        // Inicializar el sistema
+        function initializeSystem() {
+            // Inicializar usuarios si no existen
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify(initialUsers));
+            }
+            
+            // Inicializar usuario actual
+            if (!localStorage.getItem('currentUser')) {
+                localStorage.setItem('currentUser', JSON.stringify(null));
+            }
+            
+            // Actualizar la vista
+            updateView();
+        }
+        
+        // Función para obtener usuarios
+        function getUsers() {
+            const users = localStorage.getItem('users');
+            return users ? JSON.parse(users) : [];
+        }
+        
+        // Función para guardar usuarios
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+            updateView();
+        }
+        
+        // Función para restablecer usuarios a valores iniciales
+        function resetUsers() {
+            if (confirm('¿Estás seguro de restablecer todos los usuarios a valores iniciales?')) {
+                saveUsers(initialUsers);
+                alert('Usuarios restablecidos correctamente');
+            }
+        }
+        
+        // Función para restablecer todo el sistema
+        function resetAll() {
+            if (confirm('¿Estás seguro de restablecer TODO el sistema? Esto eliminará todos los datos.')) {
+                localStorage.clear();
+                initializeSystem();
+                alert('Sistema restablecido correctamente');
+            }
+        }
+        
+        // Función para iniciar sesión
+        function login() {
+            const email = document.getElementById('inputEmail').value.trim();
+            const password = document.getElementById('inputPassword').value.trim();
+            const loginHeader = document.getElementById('loginHeader');
+            
+            const users = getUsers();
+            const foundUser = users.find(u => u.email === email && u.password === password);
+            
+            if (foundUser) {
+                loginHeader.innerHTML = '<h3 class="text-center mb-4" style="color: green;">¡Inicio de sesión exitoso!</h3>';
+                localStorage.setItem('currentUser', JSON.stringify(foundUser));
+                
+                // Redirigir a la página de administración
+                showAdminPage();
+            } else {
+                loginHeader.innerHTML = '<h3 class="text-center mb-4" style="color: red;">¡Credenciales incorrectas!</h3>';
+            }
+        }
+        
+        // Función para crear un nuevo usuario
+        function createNewUser() {
+            const users = getUsers();
+            
+            const newUser = {
+                name: document.getElementById('inputFirstName').value.trim(),
+                lastName: document.getElementById('inputLastName').value.trim(),
+                email: document.getElementById('registerEmail').value.trim(),
+                password: document.getElementById('registerPassword').value.trim(),
+                age: document.getElementById('inputAge').value,
+                role: document.getElementById('inputRole').value
+            };
+            
+            // Validar campos
+            if (!newUser.name || !newUser.lastName || !newUser.email || !newUser.password) {
+                alert('Por favor complete todos los campos');
+                return;
+            }
+            
+            // Verificar si el email ya existe
+            if (users.find(u => u.email === newUser.email)) {
+                alert('Este correo electrónico ya está registrado');
+                return;
+            }
+            
+            // Agregar el nuevo usuario
+            users.push(newUser);
+            saveUsers(users);
+            
+            // Mostrar mensaje de éxito
+            document.getElementById('loginHeader').innerHTML = 
+                '<h3 class="text-center mb-4" style="color: green;">¡Cuenta creada exitosamente!</h3>';
+            
+            // Ocultar formulario de registro
+            document.getElementById('registerForm').style.display = 'none';
+            
+            // Limpiar campos
+            document.getElementById('inputFirstName').value = '';
+            document.getElementById('inputLastName').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('inputAge').value = '';
+        }
+        
+        // Función para mostrar la página de administración
+        function showAdminPage() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('admin-page').style.display = 'block';
+            document.getElementById('users-page').style.display = 'none';
+            
+            // Actualizar navegación
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-admin').classList.add('active');
+            
+            // Actualizar JSON viewer
+            document.getElementById('jsonData').textContent = 
+                JSON.stringify(getUsers(), null, 2);
+        }
+        
+        // Función para mostrar la página de usuarios
+        function showUsersPage() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('admin-page').style.display = 'none';
+            document.getElementById('users-page').style.display = 'block';
+            
+            // Actualizar navegación
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-users').classList.add('active');
+            
+            // Actualizar estadísticas y lista de usuarios
+            updateUsersView();
+        }
+        
+        // Función para mostrar la página de login
+        function showLoginPage() {
+            document.getElementById('login-page').style.display = 'block';
+            document.getElementById('admin-page').style.display = 'none';
+            document.getElementById('users-page').style.display = 'none';
+            
+            // Actualizar navegación
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-login').classList.add('active');
+            
+            // Resetear el formulario de login
+            document.getElementById('inputEmail').value = '';
+            document.getElementById('inputPassword').value = '';
+            document.getElementById('loginHeader').innerHTML = '<h3 class="text-center mb-4">Inicio de Sesión</h3>';
+        }
+        
+        // Función para actualizar la vista de usuarios
+        function updateUsersView() {
+            const users = getUsers();
+            
+            // Actualizar estadísticas
+            document.getElementById('totalUsers').textContent = users.length;
+            
+            const admins = users.filter(u => u.role === 'admin').length;
+            document.getElementById('adminUsers').textContent = admins;
+            
+            const regularUsers = users.filter(u => u.role === 'user').length;
+            document.getElementById('regularUsers').textContent = regularUsers;
+            
+            const totalAge = users.reduce((sum, user) => sum + parseInt(user.age || 0), 0);
+            const avgAge = users.length ? Math.round(totalAge / users.length) : 0;
+            document.getElementById('avgAge').textContent = avgAge;
+            
+            // Actualizar lista de usuarios
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
+            
+            users.forEach(user => {
+                const userCard = document.createElement('div');
+                userCard.className = 'user-card';
+                
+                userCard.innerHTML = `
+                    <div class="user-avatar">${user.name.charAt(0)}${user.lastName.charAt(0)}</div>
+                    <div class="user-info">
+                        <div class="d-flex justify-content-between">
+                            <h5>${user.name} ${user.lastName}</h5>
+                            <span class="user-role ${user.role === 'admin' ? 'role-admin' : 'role-user'}">
+                                ${user.role === 'admin' ? 'Administrador' : 'Usuario'}
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div>${user.email}</div>
+                            <div>Edad: ${user.age || 'N/A'}</div>
+                        </div>
+                    </div>
+                `;
+                
+                usersList.appendChild(userCard);
+            });
+        }
+        
+        // Función para actualizar toda la vista
+        function updateView() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            // Si hay un usuario logueado, mostrar panel de administración
+            if (currentUser) {
+                showAdminPage();
+            } else {
+                showLoginPage();
+            }
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar el sistema
+            initializeSystem();
+            
+            // Asignar eventos
+            document.getElementById('loginButton').addEventListener('click', login);
+            document.getElementById('createAccountBtn').addEventListener('click', createNewUser);
+            document.getElementById('showRegister').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('registerForm').style.display = 'block';
+            });
+            
+            document.getElementById('resetUsersBtn').addEventListener('click', resetUsers);
+            document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+            
+            // Navegación
+            document.getElementById('nav-login').addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoginPage();
+            });
+            
+            document.getElementById('nav-admin').addEventListener('click', function(e) {
+                e.preventDefault();
+                showAdminPage();
+            });
+            
+            document.getElementById('nav-users').addEventListener('click', function(e) {
+                e.preventDefault();
+                showUsersPage();
+            });
+            
+            // Permitir login con Enter
+            document.getElementById('inputPassword').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    login();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

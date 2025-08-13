@@ -9,8 +9,165 @@
     <meta name="author" content="" />
     <title>Charts - SB Admin</title>
     <link href="css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/stylesReservas.css">
+    <!-- <link rel="stylesheet" href="css/stylesReservas.css"> -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            /* background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); */
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .reservations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .reservation-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: all 0.3s;
+            border-left: 5px solid #3498db;
+        }
+
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .reservation-card.active {
+            border-left-color: #2ecc71;
+        }
+
+        .reservation-card.expired {
+            border-left-color: #e74c3c;
+        }
+
+        .reservation-card h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reservation-card .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .reservation-card .status.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .reservation-card .status.expired {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .reservation-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+        }
+
+        .detail-item span:first-child {
+            font-weight: 600;
+            color: #7f8c8d;
+            display: block;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+
+        .detail-item span:last-child {
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .no-reservations {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+        }
+
+        .no-reservations i {
+            font-size: 3rem;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .no-reservations p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .reservations-container {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -71,63 +228,21 @@
             </nav>
         </div>
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container">
-                    <div class="history-section">
-                        <div class="section-header">
-                            <h1 class="section-title">Historial de Reservas</h1>
-                            <div class="total-reservations">
-                                <span class="detail-label">Total reservas:</span>
-                                <span class="detail-value">24</span>
-                            </div>
-                        </div>
-
-                        <div class="filters">
-                            <div class="filter-group">
-                                <label for="status-filter">Estado</label>
-                                <select id="status-filter">
-                                    <option value="all">Todos</option>
-                                    <option value="completed">Completadas</option>
-                                    <option value="upcoming">Próximas</option>
-                                    <option value="cancelled">Canceladas</option>
-                                </select>
-                            </div>
-
-                            <div class="filter-group">
-                                <label for="date-from">Desde</label>
-                                <input type="date" id="date-from">
-                            </div>
-
-                            <div class="filter-group">
-                                <label for="date-to">Hasta</label>
-                                <input type="date" id="date-to">
-                            </div>
-
-                            <div class="filter-group">
-                                <label for="mall-filter">Centro Comercial</label>
-                                <select id="mall-filter">
-                                    <option value="all">Todos</option>
-                                    <option value="agora">Ágora Mall</option>
-                                    <option value="sambil">Sambil Santo Domingo</option>
-                                    <option value="blue">Blue Mall</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="reservations-list" id="reservations-list">
-                            <!-- Las reservas se cargarán aquí dinámicamente -->
-                        </div>
-
-                        <div class="pagination">
-                            <div class="page-btn"><i class="fas fa-chevron-left"></i></div>
-                            <div class="page-btn active">1</div>
-                            <div class="page-btn">2</div>
-                            <div class="page-btn">3</div>
-                            <div class="page-btn"><i class="fas fa-chevron-right"></i></div>
+            <div class="container">
+                <div class="history-section">
+                    <div class="section-header">
+                        <h1 class="section-title">Historial de Reservas</h1>
+                        <div class="total-reservations">
+                            <span class="detail-label">Total reservas:</span>
+                            <span class="detail-value">24</span>
                         </div>
                     </div>
+
+                    <div class="reservations-container" id="reservations-list">
+                        <!-- Las reservas se cargarán aquí con JavaScript -->
+                    </div>
                 </div>
-            </main>
+            </div>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
@@ -140,11 +255,79 @@
                     </div>
                 </div>
             </footer>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Cargar datos del localStorage
+                    const appData = JSON.parse(localStorage.getItem('parkingSystemData'));
+                    const reservationsList = document.getElementById('reservations-list');
+
+                    if (appData && appData.reservations && appData.reservations.length > 0) {
+                        // Ordenar reservas por fecha (más recientes primero)
+                        appData.reservations.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                        // Generar tarjetas de reserva
+                        appData.reservations.forEach(reservation => {
+                            const reservationDate = new Date(reservation.date);
+                            const now = new Date();
+                            const isActive = reservation.status === 'active' &&
+                                (now - reservationDate) < (2 * 60 * 60 * 1000); // 2 horas de validez
+
+                            const card = document.createElement('div');
+                            card.className = `reservation-card ${isActive ? 'active' : 'expired'}`;
+
+                            card.innerHTML = `
+                        <h3>
+                            Reserva #${reservation.id.toString().slice(-6)}
+                            <span class="status ${isActive ? 'active' : 'expired'}">
+                                ${isActive ? 'Activa' : 'Expirada'}
+                            </span>
+                        </h3>
+                        <div class="reservation-details">
+                            <div class="detail-item">
+                                <span>Centro Comercial</span>
+                                <span>${reservation.mall}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Nivel</span>
+                                <span>${reservation.level}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Espacio</span>
+                                <span>${reservation.space}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Fecha y Hora</span>
+                                <span>${reservationDate.toLocaleString()}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Usuario</span>
+                                <span>${reservation.user}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Estado</span>
+                                <span>${isActive ? 'Válida por 2 horas' : 'Expirada'}</span>
+                            </div>
+                        </div>
+                    `;
+
+                            reservationsList.appendChild(card);
+                        });
+                    } else {
+                        // Mostrar mensaje si no hay reservas
+                        reservationsList.innerHTML = `
+                    <div class="no-reservations">
+                        <i class="fas fa-parking"></i>
+                        <p>No tienes reservas registradas</p>
+                    </div>
+                `;
+                    }
+                });
+            </script>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="./scriptsReservas.js"></script>
+    <!-- <script src="./scriptsReservas.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <!-- <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
