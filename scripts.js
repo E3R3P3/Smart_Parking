@@ -72,10 +72,10 @@ async function indexUser () {
     localStorage.setItem('currentUser', JSON.stringify(foundUser))
     if (foundUser.role === 'admin') {
       localStorage.setItem('isAdmin', 'true')
-      window.location.assign('/Smart_Parking/adminHome.html')
+      window.location.assign('/adminHome.html')
     }else{
       localStorage.setItem('isAdmin', 'false')
-      window.location.assign('/Smart_Parking/home.html')
+      window.location.assign('/home.html')
     }
     
   } else {
@@ -119,7 +119,7 @@ async function createNewUser() {
   localStorage.setItem('users', JSON.stringify(users));
 
   alert('Registration successful!');
-  window.location.assign('/Smart_Parking/index.html');
+  window.location.assign('/index.html');
 }
 
 
