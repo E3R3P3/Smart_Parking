@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .map-container {
+            background-color: #1e2a38;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .level-btn {
+            margin: 2px;
+        }
+
+        .spot {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 6px 6px 0 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .spot.available {
+            background-color: #28a745;
+        }
+
+        .spot.reserved {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .spot.occupied {
+            background-color: #dc3545;
+        }
+
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .legend .box {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .legend .available {
+            background-color: #28a745;
+        }
+
+        .legend .reserved {
+            background-color: #ffc107;
+        }
+
+        .legend .occupied {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="./home.html">SP</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="./index.html">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="./home.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Inicio
+                        </a>
+                        <a class="nav-link" href="./charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Reservas
+                        </a>
+                        <a class="nav-link" href="./tables.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Facturas
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Texto de ejemplo
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4 py-4">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h3>Encuentra tu espacio ideal</h3>
+                            <p>Localiza y reserva espacios de parqueo en tiempo real <br>
+                                Selecciona un centro comercial:
+                            </p>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-select">
+                                <option value="all">Todos los centros</option>
+                                <option value="ágora-mall">Ágora Mall</option>
+                                <option value="sambil">Sambil Santo Domingo</option>
+                                <option value="blue-mall">Blue Mall</option>
+                                <option value="downtown-center">Downtown Center</option>
+                                <option value="megacentro">Megacentro</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row g-4">
+                        <!-- Mapa -->
+                        <div class="col-lg-8">
+                            <div class="map-container p-3">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.328115680717!2d-69.929542724014!3d18.483072982558416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e56281c59a3f3a9%3A0x7e5c6c8b4a5d5b6c!2s%C3%81gora%20Mall!5e0!3m2!1sen!2sdo!4v1620000000000!5m2!1sen!2sdo"
+                                    width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <!-- Información de Niveles y Spots -->
+                        <div class="col-lg-4">
+                            <div class="mb-3 d-flex">
+                                <button class="btn btn-primary level-btn me-lg-auto">Nivel 1</button>
+                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 2</button>
+                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 3</button>
+                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 4</button>
+                            </div>
+
+                            <div class="d-grid gap-4 mt-4">
+                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
+                                    <div class="spot available me-lg-auto">A1</div>
+                                    <div class="spot available me-lg-auto">A2</div>
+                                    <div class="spot available me-lg-auto">A3</div>
+                                    <div class="spot available me-lg-auto">A4</div>
+                                </div>
+                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
+                                    <div class="spot available me-lg-auto">B1</div>
+                                    <div class="spot available me-lg-auto">B2</div>
+                                    <div class="spot available me-lg-auto">B3</div>
+                                    <div class="spot available me-lg-auto">B4</div>
+                                </div>
+                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
+                                    <div class="spot reserved me-lg-auto">C1</div>
+                                    <div class="spot reserved me-lg-auto">C2</div>
+                                    <div class="spot reserved me-lg-auto">C3</div>
+                                    <div class="spot available me-lg-auto">C4</div>
+                                </div>
+                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
+                                    <div class="spot occupied me-lg-auto">D1</div>
+                                    <div class="spot available me-lg-auto">D2</div>
+                                    <div class="spot reserved me-lg-auto">D3</div>
+                                    <div class="spot available me-lg-auto">D4</div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-4 legend">
+                                    <div class="box available"></div> Disponible
+                                </div>
+                                <div class="col-lg-4 legend">
+                                    <div class="box reserved"></div> Reservado
+                                </div>
+                                <div class="col-lg-4 legend">
+                                    <div class="box occupied"></div> Ocupado
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datos estadísticos -->
+                    <div class="row text-left mt-4">
+                        <div class="col-lg-2">
+                            <p>Espacios disponibles</p>
+                            <p style="font-size:x-large; font-weight: bold;">30</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <p>Tiempo promedio de búsqueda</p>
+                            <p style="font-size:x-large; font-weight: bold;">6.5 min</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <p>Nivel de ocupación</p>
+                            <p style="font-size:x-large; font-weight: bold;">33%</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="./scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="src/datatables-simple-demo.js"></script>
+</body>
+
+</html>
