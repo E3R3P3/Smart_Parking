@@ -11,67 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <style>
-        .map-container {
-            background-color: #1e2a38;
-            border-radius: 7px;
-            overflow: hidden;
-        }
-
-        .level-btn {
-            margin: 2px;
-        }
-
-        .spot {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-            border-radius: 6px 6px 0 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .spot.available {
-            background-color: #28a745;
-        }
-
-        .spot.reserved {
-            background-color: #ffc107;
-            color: black;
-        }
-
-        .spot.occupied {
-            background-color: #dc3545;
-        }
-
-        .legend {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-
-        .legend .box {
-            width: 15px;
-            height: 15px;
-            border-radius: 3px;
-        }
-
-        .legend .available {
-            background-color: #28a745;
-        }
-
-        .legend .reserved {
-            background-color: #ffc107;
-        }
-
-        .legend .occupied {
-            background-color: #dc3545;
-        }
-    </style>
+    <link rel="stylesheet" href="css/stylesDashboard.css">
 </head>
 
 <body class="sb-nav-fixed">
@@ -134,7 +74,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4 py-4">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-lg-9">
                             <h3>Encuentra tu espacio ideal</h3>
                             <p>Localiza y reserva espacios de parqueo en tiempo real <br>
@@ -151,86 +91,161 @@
                                 <option value="megacentro">Megacentro</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
 
-                    <div class="row g-4">
-                        <!-- Mapa -->
-                        <div class="col-lg-8">
-                            <div class="map-container p-3">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.328115680717!2d-69.929542724014!3d18.483072982558416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e56281c59a3f3a9%3A0x7e5c6c8b4a5d5b6c!2s%C3%81gora%20Mall!5e0!3m2!1sen!2sdo!4v1620000000000!5m2!1sen!2sdo"
-                                    width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy">
-                                </iframe>
-                            </div>
-                        </div>
-
+                    <div class="row g-4 mt-1">
                         <!-- Información de Niveles y Spots -->
                         <div class="col-lg-4">
-                            <div class="mb-3 d-flex">
-                                <button class="btn btn-primary level-btn me-lg-auto">Nivel 1</button>
-                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 2</button>
-                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 3</button>
-                                <button class="btn btn-outline-secondary level-btn me-lg-auto">Nivel 4</button>
-                            </div>
+                            <div class="app-container">
+                                <div class="header">
+                                    <h1>Encuentra tu espacio ideal</h1>
+                                    <p>Localiza y reserva espacios de parqueo en tiempo real</p>
+                                </div>
 
-                            <div class="d-grid gap-4 mt-4">
-                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
-                                    <div class="spot available me-lg-auto">A1</div>
-                                    <div class="spot available me-lg-auto">A2</div>
-                                    <div class="spot available me-lg-auto">A3</div>
-                                    <div class="spot available me-lg-auto">A4</div>
-                                </div>
-                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
-                                    <div class="spot available me-lg-auto">B1</div>
-                                    <div class="spot available me-lg-auto">B2</div>
-                                    <div class="spot available me-lg-auto">B3</div>
-                                    <div class="spot available me-lg-auto">B4</div>
-                                </div>
-                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
-                                    <div class="spot reserved me-lg-auto">C1</div>
-                                    <div class="spot reserved me-lg-auto">C2</div>
-                                    <div class="spot reserved me-lg-auto">C3</div>
-                                    <div class="spot available me-lg-auto">C4</div>
-                                </div>
-                                <div class="d-flex gap-4" style="margin-left: 4.5px;">
-                                    <div class="spot occupied me-lg-auto">D1</div>
-                                    <div class="spot available me-lg-auto">D2</div>
-                                    <div class="spot reserved me-lg-auto">D3</div>
-                                    <div class="spot available me-lg-auto">D4</div>
-                                </div>
-                            </div>
+                                <div class="content">
+                                    <div class="mall-selector">
+                                        <label for="mall-select">Selecciona el centro comercial:</label>
+                                        <select id="mall-select">
+                                            <option value="agora">Ágora Mall</option>
+                                            <option value="sambil">Sambil Santo Domingo</option>
+                                            <option value="blue">Blue Mall</option>
+                                            <option value="galeria">Galería 360</option>
+                                        </select>
+                                    </div>
 
-                            <div class="row mt-3">
-                                <div class="col-lg-4 legend">
-                                    <div class="box available"></div> Disponible
+                                    <div class="levels-container">
+                                        <div class="level-card">
+                                            <div class="level-header">
+                                                <span>Nivel 1</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                            <div class="level-content">
+                                                <!-- Spaces will be generated by JS -->
+                                            </div>
+                                        </div>
+
+                                        <div class="level-card">
+                                            <div class="level-header">
+                                                <span>Nivel 2</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                            <div class="level-content">
+                                                <!-- Spaces will be generated by JS -->
+                                            </div>
+                                        </div>
+
+                                        <div class="level-card active">
+                                            <div class="level-header">
+                                                <span>Nivel 3</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                            <div class="level-content">
+                                                <!-- Spaces will be generated by JS -->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-4 legend">
-                                    <div class="box reserved"></div> Reservado
-                                </div>
-                                <div class="col-lg-4 legend">
-                                    <div class="box occupied"></div> Ocupado
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary" style="width: 50%; height: 30%; margin-left: 30px;">
+                                        <i class="fas fa-check-circle"><a href="Reserva.html"></a></i> Reservar espacio
+                                    </button>
+                                    <!-- <button class="btn btn-secondary">
+                                        <i class="fas fa-directions"></i> Cómo llegar
+                                    </button> -->
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-8">
+                            <div class="stats-panel">
+                                <!-- <div class="panel-title">Centro Comercial Seleccionado</div> -->
+                                <div class="me-4" style="margin-bottom: 9rem;">
+                                </div>
+                                <div class="mall-info">
+                                    <div class="mall-logo">AM</div>
+                                    <div class="mall-details">
+                                        <h2>Ágora Mall</h2>
+                                        <p>Av. Abraham Lincoln, Santo Domingo</p>
+                                    </div>
+                                </div>
+
+                                <div class="stats-container">
+                                    <div class="stat-card">
+                                        <h3>Espacios disponibles</h3>
+                                        <div class="stat-value">30</div>
+                                        <div class="stat-description">de 90 espacios totales</div>
+                                        <div class="progress-bar">
+                                            <div class="progress progress-available"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="stat-card">
+                                        <h3>Tiempo promedio de búsqueda</h3>
+                                        <div class="stat-value">6.5 min</div>
+                                        <div class="stat-description">Reducción del 65%</div>
+                                    </div>
+
+                                    <div class="stat-card">
+                                        <h3>Nivel de ocupación</h3>
+                                        <div class="stat-value">33%</div>
+                                        <div class="stat-description">Espacio suficiente</div>
+                                    </div>
+
+                                    <div class="stat-card">
+                                        <h3>Reservas activas</h3>
+                                        <div class="stat-value">12</div>
+                                        <div class="stat-description">En la última hora</div>
+                                    </div>
+                                </div>
+
+                                <div class="space-details">
+                                    <h3>Detalles del espacio seleccionado</h3>
+                                    <div class="space-info">
+                                        <div class="info-item">
+                                            <span>Espacio</span>
+                                            <div id="selected-space">A1</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Estado</span>
+                                            <div id="space-status">Disponible</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Distancia a entrada</span>
+                                            <div>120 metros</div>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Tamaño</span>
+                                            <div>Estándar (5m x 2.5m)</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="map-container p-3">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.328115680717!2d-69.929542724014!3d18.483072982558416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e56281c59a3f3a9%3A0x7e5c6c8b4a5d5b6c!2s%C3%81gora%20Mall!5e0!3m2!1sen!2sdo!4v1620000000000!5m2!1sen!2sdo"
+                                width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                        <!-- Datos estadísticos -->
+                        <!-- <div class="row text-left mt-4">
+                            <div class="col-lg-2">
+                                <p>Espacios disponibles</p>
+                                <p style="font-size:x-large; font-weight: bold;">30</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Tiempo promedio de búsqueda</p>
+                                <p style="font-size:x-large; font-weight: bold;">6.5 min</p>
+                            </div>
+                            <div class="col-lg-2">
+                                <p>Nivel de ocupación</p>
+                                <p style="font-size:x-large; font-weight: bold;">33%</p>
+                            </div>
+                        </div> -->
                     </div>
-
-                    <!-- Datos estadísticos -->
-                    <div class="row text-left mt-4">
-                        <div class="col-lg-2">
-                            <p>Espacios disponibles</p>
-                            <p style="font-size:x-large; font-weight: bold;">30</p>
-                        </div>
-                        <div class="col-lg-3">
-                            <p>Tiempo promedio de búsqueda</p>
-                            <p style="font-size:x-large; font-weight: bold;">6.5 min</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <p>Nivel de ocupación</p>
-                            <p style="font-size:x-large; font-weight: bold;">33%</p>
-                        </div>
-                    </div>
-                </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
@@ -248,13 +263,14 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="./scripts.js"></script>
+    <script src="./scriptDashboard.js"></script>
+    <!-- <script src="./scripts.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    <!-- <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
-    <script src="src/datatables-simple-demo.js"></script>
+    <script src="src/datatables-simple-demo.js"></script> -->
 </body>
 
 </html>

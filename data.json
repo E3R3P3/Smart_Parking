@@ -1,0 +1,28 @@
+{
+    "malls": [
+        {
+            "id": "agora",
+            "name": "Ágora Mall",
+            "address": "Av. Abraham Lincoln, Santo Domingo",
+            "levels": [
+                {
+                    "name": "Nivel 1",
+                    "spaces": [
+                        {"id": "A1", "status": "available", "size": "Estándar", "distance": 150},
+                        {"id": "A2", "status": "available", "size": "Estándar", "distance": 145},
+                        {"id": "A3", "status": "occupied", "size": "Estándar", "distance": 140},
+                        {"id": "A4", "status": "available", "size": "Grande", "distance": 135}
+                    ]
+                }
+            ],
+            "stats": {
+                "totalSpaces": 90,
+                "availableSpaces": 30,
+                "avgSearchTime": 6.5,
+                "occupancyRate": 33,
+                "activeReservations": 0
+            }
+        }
+    ],
+    "reservations": []
+}
