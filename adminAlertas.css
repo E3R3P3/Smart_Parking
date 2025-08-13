@@ -1,0 +1,327 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+
+ :root {
+     --primary: #1a2a6c;
+     --secondary: #b21f1f;
+     --accent: #fdbb2d;
+     --light: #f5f7fa;
+     --dark: #2c3e50;
+     --success: #2ecc71;
+     --warning: #f39c12;
+     --danger: #e74c3c;
+     --gray: #7f8c8d;
+     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+ }
+
+ body {
+     background: #f0f2f5;
+     color: var(--dark);
+     padding: 20px;
+ }
+
+ .reports-container {
+     max-width: 1400px;
+     margin: 0 auto;
+     background: white;
+     border-radius: 15px;
+     box-shadow: var(--card-shadow);
+     overflow: hidden;
+ }
+
+ /* Header */
+ .reports-header {
+     /* background: linear-gradient(90deg, var(--primary), var(--secondary)); */
+     color: rgb(32, 32, 32);
+     padding: 25px 30px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+ .header-left {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+ }
+
+ .header-icon {
+     width: 50px;
+     height: 50px;
+     background: rgba(255, 255, 255, 0.2);
+     border-radius: 12px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.5rem;
+ }
+
+ .header-title {
+     font-size: 1.8rem;
+     font-weight: 600;
+ }
+
+ .header-subtitle {
+     font-size: 1.1rem;
+     opacity: 0.9;
+ }
+
+ .header-actions {
+     display: flex;
+     gap: 15px;
+ }
+
+ .header-btn {
+     padding: 10px 20px;
+     background: rgba(255, 255, 255, 0.15);
+     border: 1px solid rgba(255, 255, 255, 0.3);
+     border-radius: 8px;
+     color: rgb(39, 39, 39);
+     font-weight: 500;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     transition: all 0.3s;
+ }
+
+ .header-btn:hover {
+     background: rgba(255, 255, 255, 0.25);
+     transform: translateY(-2px);
+ }
+
+ /* Filters */
+ .filters-section {
+     padding: 20px 30px;
+     background: white;
+     border-bottom: 1px solid #eee;
+     display: flex;
+     gap: 20px;
+     flex-wrap: wrap;
+ }
+
+ .filter-group {
+     flex: 1;
+     min-width: 200px;
+ }
+
+ .filter-group label {
+     display: block;
+     margin-bottom: 8px;
+     font-weight: 600;
+     color: var(--dark);
+ }
+
+ .filter-group select,
+ .filter-group input {
+     width: 100%;
+     padding: 12px 15px;
+     border: 1px solid #e0e0e0;
+     border-radius: 8px;
+     background: white;
+     font-size: 1rem;
+     transition: all 0.3s;
+ }
+
+ .filter-group select:focus,
+ .filter-group input:focus {
+     border-color: var(--primary);
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.1);
+ }
+
+ .filter-actions {
+     display: flex;
+     align-items: flex-end;
+     gap: 10px;
+ }
+
+ .filter-btn {
+     height: 46px;
+     padding: 0 20px;
+     border: none;
+     border-radius: 8px;
+     font-weight: 600;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     transition: all 0.3s;
+ }
+
+ .btn-apply {
+     background: var(--primary);
+     color: white;
+ }
+
+ .btn-reset {
+     background: var(--light);
+     color: var(--dark);
+ }
+
+ .filter-btn:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+ }
+
+ /* Reports Table */
+ .reports-table-container {
+     padding: 0 30px 30px;
+     overflow-x: auto;
+ }
+
+ .reports-table {
+     width: 100%;
+     border-collapse: collapse;
+     min-width: 1000px;
+ }
+
+ .reports-table thead {
+     background: var(--light);
+ }
+
+ .reports-table th {
+     padding: 16px 15px;
+     text-align: left;
+     font-weight: 600;
+     color: var(--dark);
+     border-bottom: 2px solid #e0e0e0;
+ }
+
+ .reports-table tbody tr {
+     border-bottom: 1px solid #eee;
+     transition: all 0.3s;
+ }
+
+ .reports-table tbody tr:hover {
+     background: rgba(26, 42, 108, 0.03);
+ }
+
+ .reports-table td {
+     padding: 15px;
+     vertical-align: top;
+ }
+
+ /* Status Badges */
+ .status-badge {
+     padding: 6px 12px;
+     border-radius: 20px;
+     font-size: 0.85rem;
+     font-weight: 500;
+     display: inline-block;
+ }
+
+ .status-pending {
+     background: rgba(243, 156, 18, 0.15);
+     color: var(--warning);
+ }
+
+ .status-resolved {
+     background: rgba(46, 204, 113, 0.15);
+     color: var(--success);
+ }
+
+ .status-in-progress {
+     background: rgba(52, 152, 219, 0.15);
+     color: #3498db;
+ }
+
+ .status-critical {
+     background: rgba(231, 76, 60, 0.15);
+     color: var(--danger);
+ }
+
+ /* Action Buttons */
+ .action-buttons {
+     display: flex;
+     gap: 8px;
+ }
+
+ .action-btn {
+     width: 32px;
+     height: 32px;
+     border-radius: 8px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     transition: all 0.3s;
+     border: 1px solid #e0e0e0;
+     background: white;
+ }
+
+ .action-btn:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+ }
+
+ .btn-view {
+     color: var(--primary);
+ }
+
+ .btn-view:hover {
+     border-color: var(--primary);
+     background: rgba(26, 42, 108, 0.05);
+ }
+
+ .btn-resolve {
+     color: var(--success);
+ }
+
+ .btn-resolve:hover {
+     border-color: var(--success);
+     background: rgba(46, 204, 113, 0.05);
+ }
+
+ .btn-delete {
+     color: var(--danger);
+ }
+
+ .btn-delete:hover {
+     border-color: var(--danger);
+     background: rgba(231, 76, 60, 0.05);
+ }
+
+ /* Responsive */
+ @media (max-width: 992px) {
+     .reports-header {
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 20px;
+     }
+
+     .header-actions {
+         width: 100%;
+         justify-content: center;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .filters-section {
+         flex-direction: column;
+     }
+
+     .filter-actions {
+         width: 100%;
+         justify-content: center;
+     }
+
+     .filter-btn {
+         flex: 1;
+     }
+ }
+
+ @media (max-width: 480px) {
+     .header-actions {
+         flex-direction: column;
+     }
+
+     .header-btn {
+         width: 100%;
+         justify-content: center;
+     }
+ }

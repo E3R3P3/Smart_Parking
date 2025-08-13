@@ -1,816 +1,178 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Inteligente de Gestión de Parqueos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 20px;
-        }
-
-        .app-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 25px;
-            flex-grow: 1;
-        }
-
-        .mall-selector {
-            margin-bottom: 25px;
-        }
-
-        .mall-selector label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        select {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            background-color: white;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        select:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .levels-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .level-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 2px solid #e0e0e0;
-        }
-
-        .level-card.active {
-            border-color: #3498db;
-            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
-        }
-
-        .level-header {
-            background: #f8f9fa;
-            padding: 15px 20px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .level-header i {
-            transition: transform 0.3s;
-        }
-
-        .level-card.active .level-header i {
-            transform: rotate(180deg);
-        }
-
-        .level-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            padding: 20px;
-            display: none;
-        }
-
-        .level-card.active .level-content {
-            display: grid;
-        }
-
-        .parking-space {
-            background: #f1f2f6;
-            border-radius: 10px;
-            padding: 15px 10px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .parking-space:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .parking-space.available {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 2px solid #81c784;
-        }
-
-        .parking-space.occupied {
-            background: #ffebee;
-            color: #c62828;
-            border: 2px solid #e57373;
-            opacity: 0.7;
-        }
-
-        .parking-space.selected {
-            background: #bbdefb;
-            color: #1565c0;
-            border: 2px solid #64b5f6;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(33, 150, 243, 0.5);
-        }
-
-        .parking-space.reserved {
-            background: #fff3e0;
-            color: #ef6c00;
-            border: 2px solid #ffb74d;
-        }
-
-        .stats-panel {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .panel-title {
-            font-size: 1.8rem;
-            color: white;
-            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
-            padding: 15px 20px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .mall-info {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 20px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-        }
-
-        .mall-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #3498db, #1a237e);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .mall-details h2 {
-            font-size: 1.6rem;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
-        .mall-details p {
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-card h3 {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-
-        .stat-description {
-            font-size: 1rem;
-            color: #7f8c8d;
-        }
-
-        .progress-bar {
-            height: 12px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            border-radius: 10px;
-        }
-
-        .progress-available {
-            background: linear-gradient(90deg, #2ecc71, #1abc9c);
-            width: 67%;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, #3498db, #2980b9);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #ecf0f1;
-            color: #2c3e50;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .space-details {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .space-details h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 10px;
-        }
-
-        .space-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .info-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .info-item span:first-child {
-            font-weight: 600;
-            color: #7f8c8d;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .level-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .space-info {
-                grid-template-columns: 1fr;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Reserva - SB Admin</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="estiloUnificado.css">
+    <!-- <link rel="stylesheet" href="css/stylesReservas.css"> -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
 </head>
 
-<body>
-    <div class="container">
-        <div class="app-container">
-            <div class="header">
-                <h1>Encuentra tu espacio ideal</h1>
-                <p>Localiza y reserva espacios de parqueo en tiempo real</p>
+<body class="s2 sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="./home.html">SP</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button> -->
             </div>
-
-            <div class="content">
-                <div class="mall-selector">
-                    <label for="mall-select">Selecciona el centro comercial:</label>
-                    <select id="mall-select">
-                        <option value="agora">Ágora Mall</option>
-                        <option value="sambil">Sambil Santo Domingo</option>
-                        <option value="blue">Blue Mall</option>
-                        <option value="galeria">Galería 360</option>
-                    </select>
-                </div>
-
-                <div class="levels-container">
-                    <div class="level-card">
-                        <div class="level-header">
-                            <span>Nivel 1</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="level-content">
-                            <!-- Spaces will be generated by JS -->
-                        </div>
-                    </div>
-
-                    <div class="level-card">
-                        <div class="level-header">
-                            <span>Nivel 2</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="level-content">
-                            <!-- Spaces will be generated by JS -->
-                        </div>
-                    </div>
-
-                    <div class="level-card active">
-                        <div class="level-header">
-                            <span>Nivel 3</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="level-content">
-                            <!-- Spaces will be generated by JS -->
-                        </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="./index.html">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="./home.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Inicio
+                        </a>
+                        <a class="nav-link" href="./reserva.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-ticket" aria-hidden="true"></i></div>
+                            Reservas
+                        </a>
+                        <a class="nav-link" href="./factura.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-file-text" aria-hidden="true"></i></div>
+                            Facturas
+                        </a>
                     </div>
                 </div>
-            </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Texto de ejemplo
+                </div>
+            </nav>
         </div>
-
-        <div class="stats-panel">
-            <div class="panel-title">Centro Comercial Seleccionado</div>
-
-            <div class="mall-info">
-                <div class="mall-logo">AM</div>
-                <div class="mall-details">
-                    <h2>Ágora Mall</h2>
-                    <p>Av. Abraham Lincoln, Santo Domingo</p>
+        <div id="layoutSidenav_content">
+            <div class="container">
+                <div class="header">
+                    <h1>Historial de Reservas</h1>
                 </div>
-            </div>
+                <div class="history-section">
 
-            <div class="stats-container">
-                <div class="stat-card">
-                    <h3>Espacios disponibles</h3>
-                    <div class="stat-value">30</div>
-                    <div class="stat-description">de 90 espacios totales</div>
-                    <div class="progress-bar">
-                        <div class="progress progress-available"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Tiempo promedio de búsqueda</h3>
-                    <div class="stat-value">6.5 min</div>
-                    <div class="stat-description">Reducción del 65%</div>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Nivel de ocupación</h3>
-                    <div class="stat-value">33%</div>
-                    <div class="stat-description">Espacio suficiente</div>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Reservas activas</h3>
-                    <div class="stat-value">12</div>
-                    <div class="stat-description">En la última hora</div>
-                </div>
-            </div>
-
-            <div class="space-details">
-                <h3>Detalles del espacio seleccionado</h3>
-                <div class="space-info">
-                    <div class="info-item">
-                        <span>Espacio</span>
-                        <div id="selected-space">A1</div>
-                    </div>
-                    <div class="info-item">
-                        <span>Estado</span>
-                        <div id="space-status">Disponible</div>
-                    </div>
-                    <div class="info-item">
-                        <span>Distancia a entrada</span>
-                        <div>120 metros</div>
-                    </div>
-                    <div class="info-item">
-                        <span>Tamaño</span>
-                        <div>Estándar (5m x 2.5m)</div>
+                    <div class="reservations-container" id="reservations-list">
+                        <!-- Las reservas se cargarán aquí con JavaScript -->
                     </div>
                 </div>
             </div>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Cargar datos del localStorage
+                    const appData = JSON.parse(localStorage.getItem('parkingSystemData'));
+                    const reservationsList = document.getElementById('reservations-list');
 
-            <div class="action-buttons">
-                <button class="btn btn-primary">
-                    <i class="fas fa-check-circle"></i> Reservar espacio
-                </button>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-directions"></i> Cómo llegar
-                </button>
-            </div>
+                    if (appData && appData.reservations && appData.reservations.length > 0) {
+                        // Ordenar reservas por fecha (más recientes primero)
+                        appData.reservations.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                        // Generar tarjetas de reserva
+                        appData.reservations.forEach(reservation => {
+                            const reservationDate = new Date(reservation.date);
+                            const now = new Date();
+                            const isActive = reservation.status === 'active' &&
+                                (now - reservationDate) < (2 * 60 * 60 * 1000); // 2 horas de validez
+
+                            const card = document.createElement('div');
+                            card.className = `reservation-card ${isActive ? 'active' : 'expired'}`;
+
+                            card.innerHTML = `
+                        <h3>
+                            Reserva #${reservation.id.toString().slice(-6)}
+                            <span class="status ${isActive ? 'active' : 'expired'}">
+                                ${isActive ? 'Activa' : 'Expirada'}
+                            </span>
+                        </h3>
+                        <div class="reservation-details">
+                            <div class="detail-item">
+                                <span>Centro Comercial</span>
+                                <span>${reservation.mall}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Nivel</span>
+                                <span>${reservation.level}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Espacio</span>
+                                <span>${reservation.space}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Fecha y Hora</span>
+                                <span>${reservationDate.toLocaleString()}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Usuario</span>
+                                <span>${reservation.user}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Estado</span>
+                                <span>${isActive ? 'Válida por 2 horas' : 'Expirada'}</span>
+                            </div>
+                        </div>
+                    `;
+
+                            reservationsList.appendChild(card);
+                        });
+                    } else {
+                        // Mostrar mensaje si no hay reservas
+                        reservationsList.innerHTML = `
+                    <div class="no-reservations">
+                        <i class="fas fa-parking"></i>
+                        <p>No tienes reservas registradas</p>
+                    </div>
+                `;
+                    }
+                });
+            </script>
         </div>
     </div>
-    <script>
-        // Función para inicializar datos si no existen
-        function initializeData() {
-            if (!localStorage.getItem('parkingSystemData')) {
-                const initialData = {
-                    malls: [
-                        {
-                            id: "agora",
-                            name: "Ágora Mall",
-                            address: "Av. Abraham Lincoln, Santo Domingo",
-                            levels: [
-                                {
-                                    name: "Nivel 1",
-                                    spaces: [
-                                        { id: "A1", status: "available", size: "Estándar", distance: 150 },
-                                        { id: "A2", status: "available", size: "Estándar", distance: 145 },
-                                        { id: "A3", status: "occupied", size: "Estándar", distance: 140 },
-                                        { id: "A4", status: "available", size: "Grande", distance: 135 },
-                                        { id: "B1", status: "reserved", size: "Estándar", distance: 130 },
-                                        { id: "B2", status: "available", size: "Estándar", distance: 125 },
-                                        { id: "B3", status: "occupied", size: "Grande", distance: 120 },
-                                        { id: "B4", status: "available", size: "Estándar", distance: 115 },
-                                        { id: "C1", status: "available", size: "Estándar", distance: 110 },
-                                        { id: "C2", status: "reserved", size: "Grande", distance: 105 },
-                                        { id: "C3", status: "available", size: "Estándar", distance: 100 },
-                                        { id: "C4", status: "occupied", size: "Estándar", distance: 95 },
-                                        { id: "D1", status: "available", size: "Grande", distance: 90 },
-                                        { id: "D2", status: "available", size: "Estándar", distance: 85 },
-                                        { id: "D3", status: "reserved", size: "Estándar", distance: 80 },
-                                        { id: "D4", status: "available", size: "Grande", distance: 75 }
-                                    ]
-                                },
-                                {
-                                    name: "Nivel 2",
-                                    spaces: [
-                                        { id: "A1", status: "available", size: "Estándar", distance: 70 },
-                                        { id: "A2", status: "occupied", size: "Grande", distance: 65 },
-                                        { id: "A3", status: "available", size: "Estándar", distance: 60 },
-                                        { id: "A4", status: "available", size: "Estándar", distance: 55 },
-                                        { id: "B1", status: "reserved", size: "Grande", distance: 50 },
-                                        { id: "B2", status: "available", size: "Estándar", distance: 45 },
-                                        { id: "B3", status: "occupied", size: "Estándar", distance: 40 },
-                                        { id: "B4", status: "available", size: "Grande", distance: 35 },
-                                        { id: "C1", status: "available", size: "Estándar", distance: 30 },
-                                        { id: "C2", status: "reserved", size: "Estándar", distance: 25 },
-                                        { id: "C3", status: "available", size: "Grande", distance: 20 },
-                                        { id: "C4", status: "occupied", size: "Estándar", distance: 15 },
-                                        { id: "D1", status: "available", size: "Estándar", distance: 10 },
-                                        { id: "D2", status: "available", size: "Grande", distance: 5 },
-                                        { id: "D3", status: "reserved", size: "Estándar", distance: 10 },
-                                        { id: "D4", status: "available", size: "Estándar", distance: 15 }
-                                    ]
-                                },
-                                {
-                                    name: "Nivel 3",
-                                    spaces: [
-                                        { id: "A1", status: "available", size: "Grande", distance: 20 },
-                                        { id: "A2", status: "occupied", size: "Estándar", distance: 25 },
-                                        { id: "A3", status: "available", size: "Estándar", distance: 30 },
-                                        { id: "A4", status: "reserved", size: "Grande", distance: 35 },
-                                        { id: "B1", status: "available", size: "Estándar", distance: 40 },
-                                        { id: "B2", status: "available", size: "Estándar", distance: 45 },
-                                        { id: "B3", status: "occupied", size: "Grande", distance: 50 },
-                                        { id: "B4", status: "available", size: "Estándar", distance: 55 },
-                                        { id: "C1", status: "reserved", size: "Estándar", distance: 60 },
-                                        { id: "C2", status: "available", size: "Grande", distance: 65 },
-                                        { id: "C3", status: "available", size: "Estándar", distance: 70 },
-                                        { id: "C4", status: "occupied", size: "Estándar", distance: 75 },
-                                        { id: "D1", status: "available", size: "Grande", distance: 80 },
-                                        { id: "D2", status: "reserved", size: "Estándar", distance: 85 },
-                                        { id: "D3", status: "available", size: "Estándar", distance: 90 },
-                                        { id: "D4", status: "available", size: "Grande", distance: 95 }
-                                    ]
-                                }
-                            ],
-                            stats: {
-                                totalSpaces: 90,
-                                availableSpaces: 30,
-                                avgSearchTime: 6.5,
-                                occupancyRate: 33,
-                                activeReservations: 12
-                            }
-                        },
-                        {
-                            id: "sambil",
-                            name: "Sambil Santo Domingo",
-                            address: "Av. John F. Kennedy, Santo Domingo",
-                            levels: [
-                                // Estructura similar para Sambil
-                            ],
-                            stats: {
-                                totalSpaces: 120,
-                                availableSpaces: 45,
-                                avgSearchTime: 8.2,
-                                occupancyRate: 62,
-                                activeReservations: 18
-                            }
-                        }
-                    ],
-                    reservations: []
-                };
-                localStorage.setItem('parkingSystemData', JSON.stringify(initialData));
-            }
-        }
-
-        // Función para obtener los datos
-        function getAppData() {
-            return JSON.parse(localStorage.getItem('parkingSystemData'));
-        }
-
-        // Función para guardar datos
-        function saveAppData(data) {
-            localStorage.setItem('parkingSystemData', JSON.stringify(data));
-        }
-
-        // Inicializamos los datos al cargar la página
-        initializeData();
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const appData = getAppData();
-
-            // Generar espacios de estacionamiento basados en los datos JSON
-            function generateParkingSpaces() {
-                const currentMall = document.getElementById('mall-select').value;
-                const mall = appData.malls.find(m => m.id === currentMall);
-
-                const levelContents = document.querySelectorAll('.level-content');
-
-                levelContents.forEach((content, index) => {
-                    content.innerHTML = ''; // Limpiar contenido existente
-
-                    if (mall && mall.levels[index]) {
-                        const level = mall.levels[index];
-
-                        level.spaces.forEach(space => {
-                            const spaceElement = document.createElement('div');
-                            spaceElement.className = `parking-space ${space.status}`;
-                            spaceElement.textContent = space.id;
-                            spaceElement.dataset.spaceId = space.id;
-                            spaceElement.dataset.level = level.name;
-
-                            spaceElement.addEventListener('click', function () {
-                                selectSpace(this, space, level.name);
-                            });
-
-                            content.appendChild(spaceElement);
-                        });
-                    }
-                });
-
-                updateMallStats(mall);
-            }
-
-            // Función para seleccionar un espacio
-            function selectSpace(element, spaceData, levelName) {
-                // Deseleccionar todos los espacios primero
-                document.querySelectorAll('.parking-space').forEach(s => {
-                    s.classList.remove('selected');
-                });
-
-                // Seleccionar el espacio clickeado
-                element.classList.add('selected');
-
-                // Actualizar detalles del espacio
-                document.getElementById('selected-space').textContent = spaceData.id;
-                document.getElementById('space-status').textContent =
-                    spaceData.status === 'available' ? 'Disponible' :
-                        spaceData.status === 'occupied' ? 'Ocupado' : 'Reservado';
-
-                // Actualizar otros detalles
-                const spaceDetails = document.querySelectorAll('.space-info div');
-                spaceDetails[0].textContent = spaceData.id;
-                spaceDetails[1].textContent = spaceData.status === 'available' ? 'Disponible' :
-                    spaceData.status === 'occupied' ? 'Ocupado' : 'Reservado';
-                spaceDetails[2].textContent = spaceData.distance + " metros";
-                spaceDetails[3].textContent = spaceData.size;
-
-                // Cambiar color según estado
-                const statusElement = document.getElementById('space-status');
-                if (spaceData.status === 'available') {
-                    statusElement.style.color = '#2e7d32';
-                } else if (spaceData.status === 'occupied') {
-                    statusElement.style.color = '#c62828';
-                } else {
-                    statusElement.style.color = '#ef6c00';
-                }
-            }
-
-            // Función para actualizar estadísticas del centro comercial
-            function updateMallStats(mall) {
-                if (!mall) return;
-
-                document.querySelector('.mall-logo').textContent = mall.name.substring(0, 2);
-                document.querySelector('.mall-details h2').textContent = mall.name;
-                document.querySelector('.mall-details p').textContent = mall.address;
-
-                // Actualizar estadísticas
-                document.querySelectorAll('.stat-value')[0].textContent = mall.stats.availableSpaces;
-                document.querySelectorAll('.stat-value')[1].textContent = mall.stats.avgSearchTime + " min";
-                document.querySelectorAll('.stat-value')[2].textContent = mall.stats.occupancyRate + "%";
-                document.querySelectorAll('.stat-value')[3].textContent = mall.stats.activeReservations;
-
-                // Actualizar barra de progreso
-                const availablePercent = (mall.stats.availableSpaces / mall.stats.totalSpaces) * 100;
-                document.querySelector('.progress').style.width = availablePercent + "%";
-            }
-
-            // Función para hacer una reserva
-            function makeReservation() {
-                const selectedSpace = document.querySelector('.parking-space.selected');
-                if (!selectedSpace) {
-                    alert('Por favor selecciona un espacio primero');
-                    return;
-                }
-
-                const spaceId = selectedSpace.dataset.spaceId;
-                const levelName = selectedSpace.dataset.level;
-                const mallId = document.getElementById('mall-select').value;
-
-                const mall = appData.malls.find(m => m.id === mallId);
-                const level = mall.levels.find(l => l.name === levelName);
-                const space = level.spaces.find(s => s.id === spaceId);
-
-                if (space.status !== 'available') {
-                    alert('Este espacio no está disponible para reservar');
-                    return;
-                }
-
-                // Crear objeto de reserva
-                const reservation = {
-                    id: Date.now(), // ID único basado en timestamp
-                    mall: mall.name,
-                    level: levelName,
-                    space: spaceId,
-                    date: new Date().toISOString(),
-                    status: 'active',
-                    user: 'Usuario Demo' // En una app real sería el usuario autenticado
-                };
-
-                // Actualizar estado del espacio
-                space.status = 'reserved';
-                mall.stats.availableSpaces--;
-                mall.stats.occupancyRate = Math.round(((mall.stats.totalSpaces - mall.stats.availableSpaces) / mall.stats.totalSpaces) * 100);
-                mall.stats.activeReservations++;
-
-                // Agregar a historial de reservas
-                appData.reservations.push(reservation);
-
-                // Guardar cambios
-                saveAppData(appData);
-
-                // Actualizar UI
-                selectedSpace.classList.remove('available');
-                selectedSpace.classList.add('reserved');
-                updateMallStats(mall);
-
-                alert(`Reserva confirmada para espacio ${spaceId} en ${levelName}`);
-
-                // Redirigir a página de historial
-                window.location.href = 'historial.html';
-            }
-
-            // Configurar eventos
-            document.getElementById('mall-select').addEventListener('change', generateParkingSpaces);
-            document.querySelector('.btn-primary').addEventListener('click', makeReservation);
-
-            // Configurar acordeón para niveles
-            document.querySelectorAll('.level-header').forEach(header => {
-                header.addEventListener('click', function () {
-                    const card = this.parentElement;
-                    const isActive = card.classList.contains('active');
-
-                    // Cerrar todas las tarjetas
-                    document.querySelectorAll('.level-card').forEach(c => {
-                        c.classList.remove('active');
-                    });
-
-                    // Abrir esta tarjeta si no estaba activa
-                    if (!isActive) {
-                        card.classList.add('active');
-                    }
-                });
-            });
-
-            // Generar espacios iniciales
-            generateParkingSpaces();
-        });
-    </script>
-    <!-- <script src="script.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <!-- <script src="./scriptsReservas.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="assets/demo/chart-pie-demo.js"></script> -->
 </body>
 
 </html>

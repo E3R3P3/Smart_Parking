@@ -70,7 +70,14 @@ async function indexUser () {
   if (foundUser) {
     indexHeader.innerHTML = '<h3 id="indexHeader" class="text-center font-weight-light my-4" style="color: green;">Login successful!</h3>'
     localStorage.setItem('currentUser', JSON.stringify(foundUser))
-    window.location.assign('./home.html')
+    if (foundUser.role === 'admin') {
+      localStorage.setItem('isAdmin', 'true')
+      window.location.assign('/Smart_Parking/adminHome.html')
+    }else{
+      localStorage.setItem('isAdmin', 'false')
+      window.location.assign('/Smart_Parking/home.html')
+    }
+    
   } else {
     indexHeader.innerHTML = '<h3 id="indexHeader" class="text-center font-weight-light my-4" style="color: red;">Login failed!</h3>'
   }
@@ -112,7 +119,7 @@ async function createNewUser() {
   localStorage.setItem('users', JSON.stringify(users));
 
   alert('Registration successful!');
-  window.location.assign('./index.html');
+  window.location.assign('/Smart_Parking/index.html');
 }
 
 

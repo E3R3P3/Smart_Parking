@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="adminHome.css">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        /* Nuevos estilos para el carrusel de pago */
+        .payment-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .payment-carousel {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .carousel-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .carousel-steps {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            background: #34495e;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #7f8c8d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: #3498db;
+            transform: scale(1.2);
+        }
+
+        .step.completed {
+            background: #2ecc71;
+        }
+
+        .carousel-body {
+            padding: 30px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carousel-page {
+            display: none;
+        }
+
+        .carousel-page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reservation-summary {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .reservation-summary h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .reservation-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover {
+            border-color: #3498db;
+            transform: translateY(-3px);
+        }
+
+        .payment-method.selected {
+            border-color: #3498db;
+            background: #e1f0fa;
+        }
+
+        .payment-method i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .payment-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .confirmation-icon {
+            text-align: center;
+            font-size: 4rem;
+            color: #2ecc71;
+            margin: 20px 0;
+        }
+
+        .confirmation-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .carousel-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .carousel-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-prev {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .btn-next {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-confirm {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="s1 sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="./home.html">SP</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button> -->
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="./index.html">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="./adminHome.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="./adminAlertas.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>
+                            Alertas
+                        </a>
+                        <a class="nav-link" href="./adminPanelControl.html">
+                            <div class="sb-nav-link-icon"><i class="fa fa-cog" aria-hidden="true"></i></div>
+                            Panel de Control
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Texto de ejemplo
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+
+            <!-- Main Content -->
+            <div class="main-content">
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <div class="dashboard-title">
+                        <h1>Dashboard - Administrativo</h1>
+                        <p>Monitoreo en tiempo real de los parqueos de centros comerciales</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="mall-select">Centro Comercial</label>
+                            <select id="mall-select">
+                                <option value="agora">Ágora Mall</option>
+                                <option value="sambil">Sambil Santo Domingo</option>
+                                <option value="blue">Blue Mall</option>
+                                <option value="galeria">Galería 360</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="level-select">Nivel</label>
+                            <select id="level-select">
+                                <option value="all">Todos los niveles</option>
+                                <option value="level1">Nivel 1</option>
+                                <option value="level2">Nivel 2</option>
+                                <option value="level3">Nivel 3</option>
+                                <option value="level4">Nivel 4</option>
+                                <option value="basement">Sótano</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="date-select">Rango de Fechas</label>
+                            <select id="date-select">
+                                <option value="today">Hoy</option>
+                                <option value="week">Esta semana</option>
+                                <option value="month">Este mes</option>
+                                <option value="quarter">Este trimestre</option>
+                                <option value="custom">Personalizado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Cards Grid -->
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Espacios Totales</div>
+                                <div class="card-icon icon-primary">
+                                    <i class="fas fa-parking"></i>
+                                </div>
+                            </div>
+                            <div class="card-value">1,250</div>
+                            <div class="card-description">Capacidad total del centro comercial</div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Ocupación Actual</div>
+                                <div class="card-icon icon-warning">
+                                    <i class="fas fa-car"></i>
+                                </div>
+                            </div>
+                            <div class="card-value">78%</div>
+                            <div class="card-description">Espacios ocupados en tiempo real</div>
+                            <div class="card-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> 5% más que ayer
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Alertas Hoy</div>
+                                <div class="card-icon icon-success">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                            </div>
+                            <div class="card-value">342</div>
+                            <div class="card-description">Alertas realizadas hoy</div>
+                            <div class="card-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> 12% más que ayer
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Ingresos Diarios</div>
+                                <div class="card-icon icon-danger">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                            </div>
+                            <div class="card-value">RD$ 45,680</div>
+                            <div class="card-description">Ingresos generados hoy</div>
+                            <div class="card-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> 8% más que ayer
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">Ocupación por Hora</div>
+                                <div class="chart-actions">
+                                    <div class="chart-btn">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="chart-btn">
+                                        <i class="fas fa-expand"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="occupationChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">Distribución por Nivel</div>
+                                <div class="chart-actions">
+                                    <div class="chart-btn">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="chart-btn">
+                                        <i class="fas fa-expand"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="distributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Datos de ejemplo
+                const hours = ['6:00', '8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+                const occupationData = [35, 45, 60, 75, 85, 92, 88, 70, 50];
+
+                const levels = ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Sótano'];
+                const distributionData = [85, 92, 78, 65, 45];
+
+                // Ocupación por hora (gráfica de línea)
+                const occupationCtx = document.getElementById('occupationChart').getContext('2d');
+                const occupationChart = new Chart(occupationCtx, {
+                    type: 'line',
+                    data: {
+                        labels: hours,
+                        datasets: [{
+                            label: 'Porcentaje de ocupación',
+                            data: occupationData,
+                            borderColor: '#1a2a6c',
+                            backgroundColor: 'rgba(26, 42, 108, 0.1)',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#1a2a6c',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.3,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleFont: {
+                                    size: 14
+                                },
+                                bodyFont: {
+                                    size: 13
+                                },
+                                padding: 10,
+                                displayColors: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function (value) {
+                                        return value + '%';
+                                    },
+                                    color: '#7f8c8d'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#7f8c8d'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Distribución por nivel (gráfica de barras)
+                const distributionCtx = document.getElementById('distributionChart').getContext('2d');
+                const distributionChart = new Chart(distributionCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: levels,
+                        datasets: [{
+                            label: 'Ocupación (%)',
+                            data: distributionData,
+                            backgroundColor: [
+                                'rgba(26, 42, 108, 0.7)',
+                                'rgba(178, 31, 31, 0.7)',
+                                'rgba(253, 187, 45, 0.7)',
+                                'rgba(46, 204, 113, 0.7)',
+                                'rgba(155, 89, 182, 0.7)'
+                            ],
+                            borderColor: [
+                                '#1a2a6c',
+                                '#b21f1f',
+                                '#fdbb2d',
+                                '#2ecc71',
+                                '#9b59b6'
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleFont: {
+                                    size: 14
+                                },
+                                bodyFont: {
+                                    size: 13
+                                },
+                                padding: 10,
+                                displayColors: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function (value) {
+                                        return value + '%';
+                                    },
+                                    color: '#7f8c8d'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#7f8c8d'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Actualizar gráficas al cambiar los filtros
+                document.getElementById('mall-select').addEventListener('change', function () {
+                    // Simular carga de nuevos datos
+                    const mallName = this.options[this.selectedIndex].text;
+                    document.querySelector('.dashboard-title h1').textContent = `Panel de Control - ${mallName}`;
+
+                    // Actualizar datos de ejemplo
+                    const newOccupationData = occupationData.map(value => {
+                        const variation = Math.floor(Math.random() * 10) - 5;
+                        return Math.max(20, Math.min(95, value + variation));
+                    });
+
+                    const newDistributionData = distributionData.map(value => {
+                        const variation = Math.floor(Math.random() * 15) - 7;
+                        return Math.max(30, Math.min(95, value + variation));
+                    });
+
+                    // Actualizar gráficas
+                    occupationChart.data.datasets[0].data = newOccupationData;
+                    occupationChart.update();
+
+                    distributionChart.data.datasets[0].data = newDistributionData;
+                    distributionChart.update();
+                });
+
+                document.getElementById('level-select').addEventListener('change', function () {
+                    // Actualizar gráfica de distribución si se selecciona un nivel específico
+                    if (this.value !== 'all') {
+                        const levelName = this.options[this.selectedIndex].text;
+                        const levelIndex = levels.indexOf(levelName);
+
+                        if (levelIndex !== -1) {
+                            // Resaltar la barra correspondiente
+                            distributionChart.data.datasets[0].backgroundColor = levels.map((_, i) =>
+                                i === levelIndex ? 'rgba(253, 187, 45, 0.9)' : 'rgba(0, 0, 0, 0.1)'
+                            );
+
+                            distributionChart.update();
+                        }
+                    } else {
+                        // Volver a colores originales
+                        distributionChart.data.datasets[0].backgroundColor = [
+                            'rgba(26, 42, 108, 0.7)',
+                            'rgba(178, 31, 31, 0.7)',
+                            'rgba(253, 187, 45, 0.7)',
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(155, 89, 182, 0.7)'
+                        ];
+
+                        distributionChart.update();
+                    }
+                });
+
+                // Simular actualización en tiempo real
+                setInterval(() => {
+                    const newData = occupationChart.data.datasets[0].data.map(value => {
+                        const variation = Math.floor(Math.random() * 3) - 1;
+                        return Math.max(20, Math.min(95, value + variation));
+                    });
+
+                    occupationChart.data.datasets[0].data = newData;
+                    occupationChart.update();
+                }, 5000);
+            </script>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <!-- <script src="./scripts.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="src/datatables-simple-demo.js"></script> -->
+</body>
+
+</html>
