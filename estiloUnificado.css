@@ -1,0 +1,288 @@
+/* ==================================================
+   Archivo único: estilos-unificados.css
+   - Uso: agrega en el <body> la clase correspondiente a la variante: "s1", "s2" o "s3"
+     Ejemplo: <body class="s1">  ó  <body class="s2">  ó  <body class="s3">
+   - Contiene: variables globales, bloque shared y secciones "scoped" para s1 / s2 / s3.
+   ================================================== */
+
+:root{
+  /* Colores y valores compartidos */
+  --primary: #3498db;
+  --primary-dark: #2980b9;
+  --accent: #2ecc71;
+  --danger: #e74c3c;
+  --muted: #7f8c8d;
+  --bg-card: #ffffff;
+  --shadow-strong: 0 15px 40px rgba(0,0,0,0.15);
+  --shadow-soft: 0 5px 15px rgba(0,0,0,0.1);
+  --radius-lg: 15px;
+  --radius-md: 10px;
+}
+
+/* ---------------- Shared (aplica a las 3 variantes) ---------------- */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor base: si no se aplica una clase en body, se aplican estilos neutros */
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px;
+  width:100%;
+}
+
+/* Header compartido (funciona tanto para <header> como .header) */
+header, .header{
+  background:var(--bg-card);
+  border-radius:var(--radius-lg);
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow-soft);
+  display:block;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header p, .header p{
+  font-size:1.1rem;
+  color:var(--muted);
+  opacity:0.95;
+}
+
+/* Tarjetas y componentes comunes */
+.card{
+  background:var(--bg-card);
+  border-radius:var(--radius-lg);
+  padding:20px;
+  box-shadow:var(--shadow-soft);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s;
+  border:none;
+}
+
+.btn:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+
+.btn-primary{ background:linear-gradient(90deg,var(--primary),var(--primary-dark)); color:white; }
+.btn-secondary{ background:#ecf0f1; color:#2c3e50; }
+.btn-ghost{ background:transparent; color:var(--primary); border:1px solid rgba(0,0,0,0.04); }
+
+/* Utilidades */
+.flex{ display:flex; }
+.center{ display:flex; align-items:center; justify-content:center; }
+.mt-1{ margin-top:1rem; }
+.mb-1{ margin-bottom:1rem; }
+
+/* Responsive shared */
+@media (max-width:900px){ .container.grid-2 { grid-template-columns: 1fr; } }
+
+/* ---------------- Scoped: variante S1 ---------------- */
+/* Uso: <body class="s1"> ... */
+body.s1{ color:#333; min-height:100vh; padding:20px; }
+
+/* Layout principal s1 */
+body.s1 .container{
+  margin-top:2rem;
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:20px;
+}
+
+body.s1 .map-container{ background-color:#1e2a38; border-radius:7px; overflow:hidden; }
+
+body.s1 .app-container{
+  background: rgba(255,255,255,0.95);
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  overflow:hidden; display:flex; flex-direction:column;
+}
+
+body.s1 .content{ padding:25px; flex-grow:1; }
+body.s1 .mall-selector{ margin-bottom:25px; }
+body.s1 .mall-selector label{ display:block; margin-bottom:10px; font-weight:600; font-size:1.1rem; }
+
+body.s1 select{
+  width:100%; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:1rem; background-color:white; cursor:pointer; transition:all .3s;
+}
+body.s1 select:focus{ border-color:var(--primary); outline:none; box-shadow:0 0 0 3px rgba(52,152,219,0.15); }
+
+/* Nivel / estacionamiento */
+body.s1 .levels-container{ display:flex; flex-direction:column; gap:20px; }
+body.s1 .level-card{ background:var(--bg-card); border-radius:15px; box-shadow:var(--shadow-soft); overflow:hidden; transition:all .3s; border:2px solid #e0e0e0; }
+body.s1 .level-card.active{ border-color:var(--primary); box-shadow:0 5px 20px rgba(52,152,219,0.18); }
+body.s1 .level-header{ background:#f8f9fa; padding:15px 20px; font-weight:700; font-size:1.2rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+body.s1 .level-header i{ transition:transform .3s; }
+body.s1 .level-card.active .level-header i{ transform:rotate(180deg); }
+
+body.s1 .level-content{ grid-template-columns: repeat(4,1fr); gap:15px; padding:20px; display:none; }
+body.s1 .level-card.active .level-content{ display:grid; }
+
+body.s1 .parking-space{ background:#f1f2f6; border-radius:10px; padding:15px 10px; text-align:center; font-weight:600; cursor:pointer; transition:all .3s; position:relative; overflow:hidden; }
+body.s1 .parking-space:hover{ transform:translateY(-3px); box-shadow:0 5px 10px rgba(0,0,0,0.1); }
+body.s1 .parking-space.available{ background:#e8f5e9; color:#2e7d32; border:2px solid #81c784; }
+body.s1 .parking-space.occupied{ background:#ffebee; color:#c62828; border:2px solid #e57373; opacity:0.85; }
+body.s1 .parking-space.selected{ background:#bbdefb; color:#1565c0; border:2px solid #64b5f6; transform:scale(1.05); box-shadow:0 0 15px rgba(33,150,243,0.45); }
+body.s1 .parking-space.reserved{ background:#fff3e0; color:#ef6c00; border:2px solid #ffb74d; }
+
+/* Stats panel s1 */
+body.s1 .stats-panel{ background:var(--bg-card); border-radius:20px; box-shadow:var(--shadow-strong); padding:30px; display:flex; flex-direction:column; gap:25px; }
+body.s1 .panel-title{ font-size:1.8rem; color:white; background: linear-gradient(90deg,#1a2a6c,#b21f1f); padding:15px 20px; border-radius:12px; text-align:center; margin-bottom:10px; }
+
+body.s1 .mall-info{ display:flex; gap:15px; align-items:center; margin-bottom:20px; background:#f8f9fa; padding:15px; border-radius:12px; }
+body.s1 .mall-logo{ width:80px; height:80px; background:linear-gradient(135deg,var(--primary),#1a237e); border-radius:50%; display:flex; justify-content:center; align-items:center; color:white; font-size:2rem; font-weight:bold; }
+
+body.s1 .mall-details h2{ font-size:1.6rem; margin-bottom:5px; color:#2c3e50; }
+body.s1 .mall-details p{ color:var(--muted); font-size:1.1rem; }
+
+body.s1 .stats-container{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+body.s1 .stat-card{ background:var(--bg-card); border-radius:15px; padding:20px; box-shadow:var(--shadow-soft); text-align:center; transition:transform .3s; }
+body.s1 .stat-card:hover{ transform:translateY(-5px); }
+body.s1 .stat-card h3{ font-size:1.2rem; color:var(--muted); margin-bottom:15px; }
+body.s1 .stat-value{ font-size:2.5rem; font-weight:700; margin-bottom:10px; color:#2c3e50; }
+body.s1 .stat-description{ font-size:1rem; color:var(--muted); }
+
+/* Payment carousel s1 */
+body.s1 .payment-overlay{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:1000; display:none; }
+body.s1 .payment-carousel{ background:var(--bg-card); border-radius:20px; width:90%; max-width:500px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3); }
+body.s1 .carousel-header{ background:#2c3e50; color:white; padding:20px; text-align:center; position:relative; }
+body.s1 .carousel-steps{ display:flex; justify-content:center; padding:15px; background:#34495e; }
+body.s1 .step{ width:30px; height:30px; border-radius:50%; background:#7f8c8d; color:white; display:flex; align-items:center; justify-content:center; margin:0 10px; font-weight:bold; transition:all .3s; }
+body.s1 .step.active{ background:var(--primary); transform:scale(1.2); }
+body.s1 .step.completed{ background:var(--accent); }
+body.s1 .carousel-body{ padding:30px; min-height:300px; display:flex; flex-direction:column; }
+body.s1 .carousel-page{ display:none; }
+body.s1 .carousel-page.active{ display:block; animation:fadeIn .5s; }
+@keyframes fadeIn{ from{ opacity:0; transform:translateY(20px);} to{ opacity:1; transform:translateY(0);} }
+
+body.s1 .reservation-summary{ text-align:center; margin-bottom:30px; }
+body.s1 .reservation-summary h3{ color:#2c3e50; margin-bottom:20px; }
+body.s1 .reservation-detail{ display:flex; justify-content:space-between; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #eee; }
+
+body.s1 .payment-methods{ display:grid; grid-template-columns:repeat(2,1fr); gap:15px; margin:20px 0; }
+body.s1 .payment-method{ border:2px solid #ecf0f1; border-radius:10px; padding:15px; text-align:center; cursor:pointer; transition:all .3s; }
+body.s1 .payment-method:hover{ border-color:var(--primary); transform:translateY(-3px); }
+body.s1 .payment-method.selected{ border-color:var(--primary); background:#e1f0fa; }
+body.s1 .payment-method i{ font-size:2.5rem; margin-bottom:10px; color:var(--primary); }
+
+body.s1 .form-group label{ margin-bottom:5px; font-weight:600; color:#2c3e50; }
+body.s1 .form-group input{ padding:12px; border:2px solid #ecf0f1; border-radius:8px; font-size:1rem; }
+body.s1 .form-group input:focus{ border-color:var(--primary); outline:none; }
+
+/* ---------------- Scoped: variante S2 ---------------- */
+/* Uso: <body class="s2"> ... */
+body.s2{ }
+
+body.s2 .container{ padding:30px; }
+body.s2 .header{ text-align:left; margin-bottom:30px; }
+body.s2 .header h1{ font-size:2.5rem; color:#2c3e50; margin-bottom:10px; }
+body.s2 .header p{ font-size:1.2rem; color:var(--muted); }
+
+body.s2 .back-button{ display:inline-block; margin-bottom:20px; padding:10px 20px; background:var(--primary); color:white; text-decoration:none; border-radius:8px; font-weight:600; transition:all .3s; }
+body.s2 .back-button:hover{ background:var(--primary-dark); transform:translateY(-2px); }
+
+body.s2 .reservations-container{ display:grid; grid-template-columns: repeat(auto-fill, minmax(350px,1fr)); gap:20px; margin-top:30px; }
+body.s2 .reservation-card{ background:var(--bg-card); border-radius:15px; box-shadow:var(--shadow-soft); padding:20px; transition:all .3s; border-left:5px solid var(--primary); }
+body.s2 .reservation-card:hover{ transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.15); }
+body.s2 .reservation-card.active{ border-left-color:var(--accent); }
+body.s2 .reservation-card.expired{ border-left-color:var(--danger); }
+
+body.s2 .reservation-card h3{ font-size:1.4rem; color:#2c3e50; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; }
+body.s2 .reservation-card .status{ padding:5px 10px; border-radius:20px; font-size:0.9rem; font-weight:600; }
+body.s2 .reservation-card .status.active{ background:#e8f5e9; color:#2e7d32; }
+body.s2 .reservation-card .status.expired{ background:#ffebee; color:#c62828; }
+
+body.s2 .reservation-details{ display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px; }
+body.s2 .detail-item{ margin-bottom:10px; }
+body.s2 .detail-item span:first-child{ font-weight:600; color:var(--muted); display:block; margin-bottom:3px; font-size:0.9rem; }
+body.s2 .detail-item span:last-child{ font-size:1.1rem; color:#2c3e50; }
+
+body.s2 .no-reservations{ text-align:center; padding:50px; grid-column:1 / -1; }
+body.s2 .no-reservations i{ font-size:3rem; color:#bdc3c7; margin-bottom:20px; }
+body.s2 .no-reservations p{ font-size:1.2rem; color:var(--muted); }
+
+@media (max-width:768px){
+  body.s2 .reservations-container{ grid-template-columns:1fr; }
+  body.s2 .reservation-details{ grid-template-columns:1fr; }
+}
+
+/* ---------------- Scoped: variante S3 ---------------- */
+/* Uso: <body class="s3"> ... */
+body.s3{ color:#333; min-height:100vh; padding:20px; }
+
+body.s3 .container{ max-width:1200px; margin:0 auto; }
+
+body.s3 header{ background:var(--bg-card); border-radius:15px; padding:20px; margin-bottom:20px; box-shadow:var(--shadow-soft); display:flex; justify-content:space-between; align-items:center; }
+
+body.s3 .logo{ display:flex; align-items:center; }
+body.s3 .logo-icon{ width:50px; height:50px; background:linear-gradient(135deg,var(--primary),#1a237e); border-radius:50%; display:flex; justify-content:center; align-items:center; color:white; font-size:1.5rem; margin-right:15px; }
+body.s3 .logo-text{ font-size:1.8rem; font-weight:bold; color:#2c3e50; }
+body.s3 .logo-text span{ color:var(--primary); }
+
+body.s3 .user-info{ text-align:right; }
+body.s3 .user-info h2{ color:#2c3e50; margin-bottom:5px; }
+body.s3 .user-info p{ color:var(--muted); font-size:0.9rem; }
+
+body.s3 .page-title{ background:var(--bg-card); border-radius:15px; padding:20px; margin-bottom:20px; text-align:center; box-shadow:var(--shadow-soft); }
+body.s3 .page-title h1{ color:#2c3e50; font-size:2.2rem; margin-bottom:10px; }
+body.s3 .page-title p{ color:var(--muted); font-size:1.1rem; }
+
+body.s3 .invoices-container{ background:var(--bg-card); border-radius:15px; padding:20px; box-shadow:var(--shadow-soft); }
+
+body.s3 .invoice-card{ border:1px solid #e0e0e0; border-radius:12px; padding:20px; margin-bottom:20px; transition:all .3s; position:relative; }
+body.s3 .invoice-card:hover{ transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.1); border-color:var(--primary); }
+
+body.s3 .invoice-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #eee; }
+body.s3 .invoice-id{ font-size:1.4rem; font-weight:bold; color:#2c3e50; }
+body.s3 .invoice-date{ color:var(--muted); font-size:1rem; }
+
+body.s3 .invoice-status{ padding:5px 12px; border-radius:20px; font-weight:600; font-size:0.9rem; }
+body.s3 .status-paid{ background:#e8f5e9; color:#2e7d32; }
+
+body.s3 .invoice-details{ display:grid; grid-template-columns:repeat(2,1fr); gap:15px; margin-bottom:20px; }
+body.s3 .detail-item{ margin-bottom:10px; }
+body.s3 .detail-label{ font-weight:600; color:var(--muted); font-size:0.9rem; margin-bottom:3px; }
+body.s3 .detail-value{ font-size:1.1rem; color:#2c3e50; }
+
+body.s3 .invoice-summary{ background:#f8f9fa; border-radius:10px; padding:15px; margin-top:15px; }
+body.s3 .summary-row{ display:flex; justify-content:space-between; margin-bottom:8px; }
+body.s3 .summary-total{ font-weight:bold; font-size:1.2rem; padding-top:10px; margin-top:10px; border-top:1px solid #e0e0e0; }
+body.s3 .invoice-actions{ display:flex; justify-content:flex-end; margin-top:15px; }
+
+body.s3 .print-btn{ padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all .3s; }
+body.s3 .print-btn:hover{ background:var(--primary-dark); transform:translateY(-2px); }
+
+body.s3 footer{ text-align:center; padding:20px; color:white; margin-top:20px; font-size:0.9rem; }
+
+@media print{
+  body *{ visibility:hidden; }
+  .print-section, .print-section *{ visibility:visible; }
+  .print-section{ position:absolute; left:0; top:0; width:100%; padding:20px; }
+  .print-btn{ display:none; }
+}
+
+@media (max-width:768px){
+  body.s3 .invoice-details{ grid-template-columns:1fr; }
+  body.s3 .invoice-header{ flex-direction:column; align-items:flex-start; }
+  body.s3 .invoice-status{ margin-top:10px; }
+  body.s3 header{ flex-direction:column; text-align:center; }
+  body.s3 .logo{ justify-content:center; margin-bottom:15px; }
+  body.s3 .user-info{ text-align:center; }
+}
+
+/* ---------------- Fallbacks y compatibilidad ---------------- */
+/* Si no se especifica clase en body, las sub-secciones más neutrales estarán disponibles */
+
+/* Fin archivo estilos-unificados.css */
