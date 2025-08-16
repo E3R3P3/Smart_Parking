@@ -13,252 +13,12 @@
     <link rel="stylesheet" href="adminAlertas.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <style>
-        /* Nuevos estilos para el carrusel de pago */
-        .payment-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .payment-carousel {
-            background: white;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .carousel-header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .carousel-header h2 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
-
-        .carousel-steps {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background: #34495e;
-        }
-
-        .step {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #7f8c8d;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .step.active {
-            background: #3498db;
-            transform: scale(1.2);
-        }
-
-        .step.completed {
-            background: #2ecc71;
-        }
-
-        .carousel-body {
-            padding: 30px;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .carousel-page {
-            display: none;
-        }
-
-        .carousel-page.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .reservation-summary {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .reservation-summary h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .reservation-detail {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .payment-method {
-            border: 2px solid #ecf0f1;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .payment-method:hover {
-            border-color: #3498db;
-            transform: translateY(-3px);
-        }
-
-        .payment-method.selected {
-            border-color: #3498db;
-            background: #e1f0fa;
-        }
-
-        .payment-method i {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #3498db;
-        }
-
-        .payment-form {
-            display: grid;
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .form-group input {
-            padding: 12px;
-            border: 2px solid #ecf0f1;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-
-        .card-details {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-        }
-
-        .confirmation-icon {
-            text-align: center;
-            font-size: 4rem;
-            color: #2ecc71;
-            margin: 20px 0;
-        }
-
-        .confirmation-message {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .carousel-footer {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #ecf0f1;
-        }
-
-        .carousel-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .carousel-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-prev {
-            background: #ecf0f1;
-            color: #2c3e50;
-        }
-
-        .btn-next {
-            background: #3498db;
-            color: white;
-        }
-
-        .btn-confirm {
-            background: #2ecc71;
-            color: white;
-        }
-
-        .btn-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body class="s1 sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="./home.html">SP</a>
+        <a class="navbar-brand ps-3" href="./home.html"><img src="./assets/img/Logo.svg" alt="img" height="25px" style="margin-left: 5px;">SP</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -277,11 +37,7 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
+                    
                     <li><a class="dropdown-item" href="./index.html">Logout</a></li>
                 </ul>
             </li>
@@ -307,8 +63,8 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Texto de ejemplo
+                    <div class="small">Proyecto SIGP:</div>
+                    Gestión de Parqueos Inteligente
                 </div>
             </nav>
         </div>
@@ -650,7 +406,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div class="text-muted">Copyright &copy;  Website 2025</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;

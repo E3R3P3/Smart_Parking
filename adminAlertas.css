@@ -18,18 +18,18 @@
      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
  }
 
- body {
+ /* body {
      background: #f0f2f5;
      color: var(--dark);
      padding: 20px;
- }
+ } */
 
  .reports-container {
      max-width: 1400px;
      margin: 0 auto;
      background: white;
      border-radius: 15px;
-     box-shadow: var(--card-shadow);
+     /* box-shadow: var(--card-shadow); */
      overflow: hidden;
  }
 
