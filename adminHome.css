@@ -80,12 +80,12 @@
     border-left: 4px solid transparent;
 }
 
-.nav-item:hover,
+/* .nav-item:hover,
 .nav-item.active {
     background: rgba(255, 255, 255, 0.1);
     color: white;
     border-left-color: var(--accent);
-}
+} */
 
 .nav-item i {
     margin-right: 12px;

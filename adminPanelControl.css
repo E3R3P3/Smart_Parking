@@ -29,7 +29,7 @@
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: var(--card-shadow);
+    /* box-shadow: var(--card-shadow); */
     display: flex;
     justify-content: space-between;
     align-items: center;

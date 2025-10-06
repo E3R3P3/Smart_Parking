@@ -305,39 +305,139 @@
                                     { id: "D4", status: "available", size: "Grande", distance: 75 }
                                 ]
                             },
-                            // ... otros niveles ...
+                            {
+                                name: "Nivel 2",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Estándar", distance: 70 },
+                                    { id: "A2", status: "occupied", size: "Grande", distance: 65 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 60 },
+                                    { id: "A4", status: "available", size: "Estándar", distance: 55 },
+                                    { id: "B1", status: "reserved", size: "Grande", distance: 50 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 45 },
+                                    { id: "B3", status: "occupied", size: "Estándar", distance: 40 },
+                                    { id: "B4", status: "available", size: "Grande", distance: 35 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 30 },
+                                    { id: "C2", status: "reserved", size: "Estándar", distance: 25 },
+                                    { id: "C3", status: "available", size: "Grande", distance: 20 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 15 },
+                                    { id: "D1", status: "available", size: "Estándar", distance: 10 },
+                                    { id: "D2", status: "available", size: "Grande", distance: 5 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 10 },
+                                    { id: "D4", status: "available", size: "Estándar", distance: 15 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 3",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Grande", distance: 20 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 25 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 30 },
+                                    { id: "A4", status: "reserved", size: "Grande", distance: 35 },
+                                    { id: "B1", status: "available", size: "Estándar", distance: 40 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 45 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 50 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 55 },
+                                    { id: "C1", status: "reserved", size: "Estándar", distance: 60 },
+                                    { id: "C2", status: "available", size: "Grande", distance: 65 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 70 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 75 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 80 },
+                                    { id: "D2", status: "reserved", size: "Estándar", distance: 85 },
+                                    { id: "D3", status: "available", size: "Estándar", distance: 90 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 95 }
+                                ]
+                            }
                         ],
                         stats: {
-                            totalSpaces: 90,
+                            totalSpaces: 48,
                             availableSpaces: 30,
                             avgSearchTime: 6.5,
-                            occupancyRate: 33,
-                            activeReservations: 12
+                            occupancyRate: 19, // aprox. (occupied 9 / 48)
+                            activeReservations: 9
                         }
                     },
+
+                    // Ahora Sambil con la misma cantidad/estructura de espacios que Ágora
                     {
                         id: "sambil",
                         name: "Sambil Santo Domingo",
                         address: "Av. John F. Kennedy, Santo Domingo",
                         levels: [
+                            // copiado igual que Ágora (Nivel 1..3)
                             {
                                 name: "Nivel 1",
                                 spaces: [
-                                    { id: "B1", status: "occupied", size: "Estándar", distance: 160 },
-                                    { id: "B2", status: "available", size: "Estándar", distance: 155 },
-                                    { id: "B3", status: "available", size: "Grande", distance: 150 },
-                                    { id: "B4", status: "occupied", size: "Estándar", distance: 145 }
+                                    { id: "A1", status: "available", size: "Estándar", distance: 160 },
+                                    { id: "A2", status: "available", size: "Estándar", distance: 155 },
+                                    { id: "A3", status: "available", size: "Grande", distance: 150 },
+                                    { id: "A4", status: "occupied", size: "Estándar", distance: 145 },
+                                    { id: "B1", status: "reserved", size: "Estándar", distance: 140 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 135 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 130 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 125 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 120 },
+                                    { id: "C2", status: "reserved", size: "Grande", distance: 115 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 110 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 105 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 100 },
+                                    { id: "D2", status: "available", size: "Estándar", distance: 95 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 90 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 85 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 2",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Estándar", distance: 80 },
+                                    { id: "A2", status: "occupied", size: "Grande", distance: 75 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 70 },
+                                    { id: "A4", status: "available", size: "Estándar", distance: 65 },
+                                    { id: "B1", status: "reserved", size: "Grande", distance: 60 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 55 },
+                                    { id: "B3", status: "occupied", size: "Estándar", distance: 50 },
+                                    { id: "B4", status: "available", size: "Grande", distance: 45 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 40 },
+                                    { id: "C2", status: "reserved", size: "Estándar", distance: 35 },
+                                    { id: "C3", status: "available", size: "Grande", distance: 30 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 25 },
+                                    { id: "D1", status: "available", size: "Estándar", distance: 20 },
+                                    { id: "D2", status: "available", size: "Grande", distance: 15 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 10 },
+                                    { id: "D4", status: "available", size: "Estándar", distance: 5 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 3",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Grande", distance: 10 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 15 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 20 },
+                                    { id: "A4", status: "reserved", size: "Grande", distance: 25 },
+                                    { id: "B1", status: "available", size: "Estándar", distance: 30 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 35 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 40 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 45 },
+                                    { id: "C1", status: "reserved", size: "Estándar", distance: 50 },
+                                    { id: "C2", status: "available", size: "Grande", distance: 55 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 60 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 65 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 70 },
+                                    { id: "D2", status: "reserved", size: "Estándar", distance: 75 },
+                                    { id: "D3", status: "available", size: "Estándar", distance: 80 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 85 }
                                 ]
                             }
                         ],
                         stats: {
-                            totalSpaces: 90,
-                            availableSpaces: 40,
+                            totalSpaces: 48,
+                            availableSpaces: 30,
                             avgSearchTime: 5.2,
-                            occupancyRate: 55,
-                            activeReservations: 1
+                            occupancyRate: 19,
+                            activeReservations: 9
                         }
                     },
+
+                    // Blue Mall con misma estructura
                     {
                         id: "blue",
                         name: "Blue Mall",
@@ -346,21 +446,77 @@
                             {
                                 name: "Nivel 1",
                                 spaces: [
-                                    { id: "C1", status: "available", size: "Estándar", distance: 120 },
-                                    { id: "C2", status: "occupied", size: "Estándar", distance: 115 },
-                                    { id: "C3", status: "available", size: "Grande", distance: 110 },
-                                    { id: "C4", status: "occupied", size: "Estándar", distance: 105 }
+                                    { id: "A1", status: "available", size: "Estándar", distance: 120 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 115 },
+                                    { id: "A3", status: "available", size: "Grande", distance: 110 },
+                                    { id: "A4", status: "occupied", size: "Estándar", distance: 105 },
+                                    { id: "B1", status: "reserved", size: "Estándar", distance: 100 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 95 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 90 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 85 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 80 },
+                                    { id: "C2", status: "reserved", size: "Grande", distance: 75 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 70 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 65 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 60 },
+                                    { id: "D2", status: "available", size: "Estándar", distance: 55 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 50 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 45 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 2",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Estándar", distance: 40 },
+                                    { id: "A2", status: "occupied", size: "Grande", distance: 35 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 30 },
+                                    { id: "A4", status: "available", size: "Estándar", distance: 25 },
+                                    { id: "B1", status: "reserved", size: "Grande", distance: 20 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 15 },
+                                    { id: "B3", status: "occupied", size: "Estándar", distance: 10 },
+                                    { id: "B4", status: "available", size: "Grande", distance: 5 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 10 },
+                                    { id: "C2", status: "reserved", size: "Estándar", distance: 15 },
+                                    { id: "C3", status: "available", size: "Grande", distance: 20 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 25 },
+                                    { id: "D1", status: "available", size: "Estándar", distance: 30 },
+                                    { id: "D2", status: "available", size: "Grande", distance: 35 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 40 },
+                                    { id: "D4", status: "available", size: "Estándar", distance: 45 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 3",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Grande", distance: 50 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 55 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 60 },
+                                    { id: "A4", status: "reserved", size: "Grande", distance: 65 },
+                                    { id: "B1", status: "available", size: "Estándar", distance: 70 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 75 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 80 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 85 },
+                                    { id: "C1", status: "reserved", size: "Estándar", distance: 90 },
+                                    { id: "C2", status: "available", size: "Grande", distance: 95 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 100 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 105 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 110 },
+                                    { id: "D2", status: "reserved", size: "Estándar", distance: 115 },
+                                    { id: "D3", status: "available", size: "Estándar", distance: 120 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 125 }
                                 ]
                             }
                         ],
                         stats: {
-                            totalSpaces: 90,
-                            availableSpaces: 50,
+                            totalSpaces: 48,
+                            availableSpaces: 30,
                             avgSearchTime: 4.8,
-                            occupancyRate: 45,
-                            activeReservations: 2
+                            occupancyRate: 19,
+                            activeReservations: 9
                         }
                     },
+
+                    // Galería 360 con misma estructura
                     {
                         id: "galeria",
                         name: "Galería 360",
@@ -369,22 +525,75 @@
                             {
                                 name: "Nivel 1",
                                 spaces: [
-                                    { id: "D1", status: "available", size: "Estándar", distance: 140 },
-                                    { id: "D2", status: "occupied", size: "Estándar", distance: 135 },
-                                    { id: "D3", status: "available", size: "Estándar", distance: 130 },
-                                    { id: "D4", status: "available", size: "Grande", distance: 125 }
+                                    { id: "A1", status: "available", size: "Estándar", distance: 140 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 135 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 130 },
+                                    { id: "A4", status: "available", size: "Grande", distance: 125 },
+                                    { id: "B1", status: "reserved", size: "Estándar", distance: 120 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 115 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 110 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 105 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 100 },
+                                    { id: "C2", status: "reserved", size: "Grande", distance: 95 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 90 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 85 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 80 },
+                                    { id: "D2", status: "available", size: "Estándar", distance: 75 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 70 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 65 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 2",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Estándar", distance: 60 },
+                                    { id: "A2", status: "occupied", size: "Grande", distance: 55 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 50 },
+                                    { id: "A4", status: "available", size: "Estándar", distance: 45 },
+                                    { id: "B1", status: "reserved", size: "Grande", distance: 40 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 35 },
+                                    { id: "B3", status: "occupied", size: "Estándar", distance: 30 },
+                                    { id: "B4", status: "available", size: "Grande", distance: 25 },
+                                    { id: "C1", status: "available", size: "Estándar", distance: 20 },
+                                    { id: "C2", status: "reserved", size: "Estándar", distance: 15 },
+                                    { id: "C3", status: "available", size: "Grande", distance: 10 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 5 },
+                                    { id: "D1", status: "available", size: "Estándar", distance: 10 },
+                                    { id: "D2", status: "available", size: "Grande", distance: 15 },
+                                    { id: "D3", status: "reserved", size: "Estándar", distance: 20 },
+                                    { id: "D4", status: "available", size: "Estándar", distance: 25 }
+                                ]
+                            },
+                            {
+                                name: "Nivel 3",
+                                spaces: [
+                                    { id: "A1", status: "available", size: "Grande", distance: 30 },
+                                    { id: "A2", status: "occupied", size: "Estándar", distance: 35 },
+                                    { id: "A3", status: "available", size: "Estándar", distance: 40 },
+                                    { id: "A4", status: "reserved", size: "Grande", distance: 45 },
+                                    { id: "B1", status: "available", size: "Estándar", distance: 50 },
+                                    { id: "B2", status: "available", size: "Estándar", distance: 55 },
+                                    { id: "B3", status: "occupied", size: "Grande", distance: 60 },
+                                    { id: "B4", status: "available", size: "Estándar", distance: 65 },
+                                    { id: "C1", status: "reserved", size: "Estándar", distance: 70 },
+                                    { id: "C2", status: "available", size: "Grande", distance: 75 },
+                                    { id: "C3", status: "available", size: "Estándar", distance: 80 },
+                                    { id: "C4", status: "occupied", size: "Estándar", distance: 85 },
+                                    { id: "D1", status: "available", size: "Grande", distance: 90 },
+                                    { id: "D2", status: "reserved", size: "Estándar", distance: 95 },
+                                    { id: "D3", status: "available", size: "Estándar", distance: 100 },
+                                    { id: "D4", status: "available", size: "Grande", distance: 105 }
                                 ]
                             }
                         ],
                         stats: {
-                            totalSpaces: 90,
-                            availableSpaces: 60,
+                            totalSpaces: 48,
+                            availableSpaces: 30,
                             avgSearchTime: 5.0,
-                            occupancyRate: 33,
-                            activeReservations: 0
+                            occupancyRate: 19,
+                            activeReservations: 9
                         }
                     }
-                    // ... otros centros comerciales ...
                 ],
                 reservations: []
             };
