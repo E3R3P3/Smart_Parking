@@ -8,6 +8,14 @@
     "role": "admin"
   },
   {
+    "name": "guest",
+    "lastName": "guest",
+    "email": "guest@example.com",
+    "password": "123456",
+    "age": 25,
+    "role": "user"
+  },
+  {
     "name": "juan",
     "lastName": "Perez",
     "email": "juan@example.com",
